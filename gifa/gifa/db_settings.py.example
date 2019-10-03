@@ -1,0 +1,4 @@
+DB_NAME = 'gifa'
+DB_USERNAME = 'gifa'
+DB_PASSWORD = 'password'
+DB_HOST = 'localhost'
