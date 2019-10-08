@@ -132,7 +132,7 @@ DATABASES = {
         'USER': DB_USERNAME,
         'PASSWORD': DB_PASSWORD,
         'HOST': DB_HOST,
-        'PORT': '',
+        'PORT': DB_PORT,
     }
 }
 
