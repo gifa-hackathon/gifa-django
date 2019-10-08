@@ -1,2 +1,0 @@
-# git is a Git submodule made with:
-git submodule add https://github.com/justb4/gxp git

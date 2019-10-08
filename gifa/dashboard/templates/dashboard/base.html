@@ -22,7 +22,6 @@
 	<!-- ICONS -->
 	<link rel="apple-touch-icon" sizes="76x76" href="{% static 'dashboard/img/apple-icon.png' %}">
 	<link rel="icon" type="image/png" sizes="96x96" href="{% static 'dashboard/img/favicon.png' %}">
-    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'leaflet-routing-machine/dist/leaflet-routing-machine.css' %}">
     {% leaflet_css %}
     <style>
         .leaflet-container {  /* all maps */
@@ -515,9 +514,7 @@
 	<script src="{% static 'dashboard/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js' %}"></script>
 	<script src="{% static 'dashboard/vendor/chartist/js/chartist.min.js' %}"></script>
 	<script src="{% static 'dashboard/scripts/klorofil-common.js' %}"></script>
-    <script>L_PREFER_CANVAS = true;</script>
     {% leaflet_js %}
-    <script src="{% static 'leaflet-routing-machine/dist/leaflet-routing-machine.js' %}"></script>
 	<script>
 	$(function() {
 		var data, options;
@@ -634,13 +631,6 @@
 			return Math.floor(Math.random() * (max - min + 1)) + min;
 		}
 
-        L.Routing.control({
-            waypoints: [
-                L.latLng(-7.0138533,107.6396524),
-                L.latLng(-6.9878382,107.5983964)
-            ],
-            routeWhileDragging: true
-        }).addTo(gifa_map);
 
 	});
 	</script>
