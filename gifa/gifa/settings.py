@@ -122,7 +122,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # GIFA setting overrides
-from .db_settings import
+from .db_settings import *
 
 ALLOWED_HOSTS = LOCAL_ALLOWED_HOSTS
 
