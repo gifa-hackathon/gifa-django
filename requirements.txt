@@ -18,3 +18,5 @@ django-simple-captcha==0.5.11
 django-bootstrap-form==3.4
 python-magic==0.4.15
 easy-thumbnails==2.6
+geopandas==0.4.1
+django-leaflet==0.24.0

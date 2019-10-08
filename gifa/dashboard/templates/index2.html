@@ -1,0 +1,26 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Map View Form Example</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'geoext3-3.2.0/examples/lib/ol/ol.css' %}">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/extjs/6.2.0/classic/theme-crisp/resources/theme-crisp-all.css"/>
+</head>
+
+<body>
+    <script src="{% static 'geoext3-3.2.0/examples/lib/ol/ol.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/extjs/6.2.0/ext-all.js"></script>
+    <script>
+        Ext.Loader.setConfig({
+            enabled: true,
+            paths: {
+                'GeoExt': "{% static 'geoext3-3.2.0/src/' %}"
+            }
+        });
+    </script>
+
+    <script src="{% static 'gifa\map2.js' %}"></script>
+</body>
+</html>

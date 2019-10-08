@@ -53,7 +53,7 @@ gifaBranch develop
 \# Configure Django settings file to use gifa database
 
     cd gifa
-    nano gifa/local_settings.py
+    nano gifa/db_settings.py
 ```
 DATABASES = {
     'default': {
