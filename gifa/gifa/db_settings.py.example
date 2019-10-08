@@ -3,3 +3,4 @@ DB_USERNAME = 'gifa'
 DB_PASSWORD = 'password'
 DB_HOST = 'localhost'
 DB_PORT = ''
+LOCAL_ALLOWED_HOSTS = []
