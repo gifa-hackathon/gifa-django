@@ -20,4 +20,4 @@ def gifa_dashboard2(request):
     """
 
     context = {}
-    return render(request, 'bootleaf/index.html', context)
+    return render(request, 'dashboard2/index.html', context)
