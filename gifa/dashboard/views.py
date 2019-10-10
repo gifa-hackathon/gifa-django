@@ -12,12 +12,4 @@ def gifa_dashboard(request):
     """
 
     context = {}
-    return render(request, 'dashboard/base.html', context)
-
-def gifa_dashboard2(request):
-    """
-    GIFA Dashboard
-    """
-
-    context = {}
-    return render(request, 'dashboard2/index.html', context)
+    return render(request, 'dashboard/index.html', context)

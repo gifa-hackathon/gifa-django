@@ -149,30 +149,6 @@ INSTALLED_APPS += [
     'dashboard.apps.DashboardConfig',
 ]
 
-# Leaflet Map Configuration
-LEAFLET_CONFIG = {
-    'DEFAULT_CENTER': (-6.989521, 107.626780),
-    'DEFAULT_ZOOM': 15,
-    'TILES': [
-        (
-            'OpenStreetMap',
-            'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            {
-                'maxZoom': 19,
-                'attribution': '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-            }
-        ),
-    ],
-    # 'PLUGINS': {
-    #     'Leaflet.Coordinates': {
-    #         'css': ['Leaflet.Coordinates/dist/Leaflet.Coordinates-0.1.5.css'],
-    #         'js': 'Leaflet.Coordinates/dist/Leaflet.Coordinates-0.1.5.min.js',
-    #         'auto-include': True,
-    #     }
-    # },
-    'RESET_VIEW' : False
-}
-
 
 # Custom middleware for errors in debug mode
 MIDDLEWARE += [
