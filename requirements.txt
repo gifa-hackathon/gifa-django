@@ -20,3 +20,4 @@ python-magic==0.4.15
 easy-thumbnails==2.6
 geopandas==0.4.1
 django-leaflet==0.24.0
+geojson==2.5.0

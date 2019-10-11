@@ -147,6 +147,7 @@ INSTALLED_APPS += [
     'easy_thumbnails',
     'leaflet',
     'dashboard.apps.DashboardConfig',
+    'odkcollect.apps.OdkcollectConfig',
 ]
 
 
@@ -188,7 +189,7 @@ RQ_QUEUES = {
     },
 }
 
-RQ_SHOW_ADMIN_LINK = True
+RQ_SHOW_ADMIN_LINK = False
 
 SITE_ID = 1
 

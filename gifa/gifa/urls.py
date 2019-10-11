@@ -24,6 +24,7 @@ adminurlpattern = [url(r'^admin/', admin.site.urls)]
 
 urlpatterns = adminurlpattern + [
     url(r'^dashboard/', include(('dashboard.urls', 'dashboard'), namespace='dashboard')),
+    url(r'^odkcollect/', include(('odkcollect.urls', 'odkcollect'), namespace='odkcollect')),
 ]
 
 if settings.DEBUG:
