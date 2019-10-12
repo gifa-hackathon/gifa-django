@@ -1,6 +1,8 @@
 from django.contrib.gis.db import models
 from django.utils.translation import gettext_lazy as _
 
+from odkcollect.models import ODKConnector
+
 
 class Desa(models.Model):
     id = models.BigIntegerField(
@@ -37,3 +39,23 @@ class Desa(models.Model):
 
     def __unicode__(self):
         return self.nama
+
+
+class Category(models.Model):
+    category_name = models.CharField(
+        max_length=255,
+        verbose_name=_('Category Name')
+    )
+    odk_connections = models.ManyToManyField(
+        ODKConnector,
+        verbose_name=_('ODK Conncetions List ID'),
+    )
+
+
+    class Meta:
+        ordering = ['pk']
+        get_latest_by = 'pk'
+        verbose_name_plural = _('Category')
+
+    def __unicode__(self):
+        return self.category_name

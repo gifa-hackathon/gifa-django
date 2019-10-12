@@ -57,6 +57,11 @@ class ODKConnector(models.Model):
         choices=TYPE_CHOICES,
         verbose_name=_('Geometry Type')
     )
+    publish = models.BooleanField(
+        default=False,
+        verbose_name=_('Publish')
+    )
+
 
     class Meta:
         ordering = ['pk']

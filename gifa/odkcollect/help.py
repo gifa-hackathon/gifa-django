@@ -3,10 +3,21 @@ import psycopg2.extras
 
 from geojson import MultiLineString, Point, Feature, FeatureCollection
 
-def odk_to_json():
+def odk_to_json(odk_con):
     """
     Convert ODK to JSON
     """
+    # db_username = odk_con.db_username
+    # db_password = odk_con.db_password
+    # db_host = odk_con.db_host
+    # db_port = odk_con.db_port
+    # db_name = odk_con.db_name
+    # db_schema = odk_con.db_schema
+    #
+    # geomtype = odk_con.geomeri_type
+    # geomcolmn = odk_con.geometry_column
+    # odktable = odk_con.odk_table_name
+
     USERNAME = "baleendah_user"
     PASSWORD = "sodagembira"
     HOST = "157.245.194.99"
@@ -18,14 +29,16 @@ def odk_to_json():
     geomcolmn = "geometri_garis"
     odktable = "fake_odk"
 
+
     try:
         # Connect Databases
+        print(odk_con.db_password)
         connection = psycopg2.connect(
-            user = USERNAME,
-            password = PASSWORD,
-            host = HOST,
-            port = PORT,
-            database = DATABASE
+            user = odk_con.db_username,
+            password = odk_con.db_password,
+            host = odk_con.db_host,
+            port = odk_con.db_port,
+            database = odk_con.db_name
         )
         curs = connection.cursor()
         cursGetTbl = connection.cursor()
@@ -36,18 +49,18 @@ def odk_to_json():
         colnames, coltypes = [], []
         cursGetCol.execute("""select * from information_schema.columns
            where table_schema NOT IN ('information_schema', 'pg_catalog')
-           and table_name = '%s' order by table_schema, table_name""" % odktable
+           and table_name = '%s' order by table_schema, table_name""" % odk_con.odk_table_name
         )
         for row in cursGetCol:
             colnames.append(row['column_name'])
             coltypes.append(row['data_type'])
 
-        curs.execute("""SELECT * FROM \"%s\".\"%s\"""" % (TABLE_SCHEMA, odktable))
+        curs.execute("""SELECT * FROM \"%s\".\"%s\"""" % (odk_con.db_schema, odk_con.odk_table_name))
         all_features = []
         for record in curs.fetchall():
-            geom_idx = colnames.index(geomcolmn)
+            geom_idx = colnames.index(odk_con.geometry_column)
             re_geomerty = record[geom_idx].split(";")
-            if geomtype == 'polyline':
+            if odk_con.geometry_type == 'polyline':
                 coordinates_list = []
                 properties_dict = {}
                 for coordinate in re_geomerty:
@@ -56,7 +69,7 @@ def odk_to_json():
                         y_coord = coordinate.split(" ")[0]
                         coordinates_list.append((float(x_coord), float(y_coord)))
                         for colname in colnames:
-                            if colname != geomcolmn:
+                            if colname != odk_con.geometry_column:
                                 properties_dict.update({
                                     colname: record[colnames.index(colname)]
                                 })

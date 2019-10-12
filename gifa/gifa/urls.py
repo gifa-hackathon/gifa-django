@@ -19,10 +19,13 @@ from django.conf.urls import url, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from .views import page_home
+
 
 adminurlpattern = [url(r'^admin/', admin.site.urls)]
 
 urlpatterns = adminurlpattern + [
+    url(r'^$', page_home, name='home'),
     url(r'^dashboard/', include(('dashboard.urls', 'dashboard'), namespace='dashboard')),
     url(r'^odkcollect/', include(('odkcollect.urls', 'odkcollect'), namespace='odkcollect')),
 ]

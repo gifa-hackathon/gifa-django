@@ -13,7 +13,17 @@ class ODKConnectorsAdmin(admin.ModelAdmin):
         'db_username',
         'geometry_column',
         'geometry_type',
+        'publish'
     ]
+    list_display_links = (
+        'con_id',
+        'con_nama',
+        'db_name',
+        'db_username',
+        'geometry_column',
+        'geometry_type',
+        'publish'
+    )
     list_filter = [
         'con_nama',
         'con_id'
