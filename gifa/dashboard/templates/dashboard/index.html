@@ -211,18 +211,10 @@ var desaBndy = L.geoJson({{ desa_bndy_json|safe }}, {
 });
 
 {% for odk_polyline in all_odk_polyline %}
-//Create a color dictionary based off of odk route_id
-var odkColors = {"1":"#ff3135", "2":"#ff3135", "3":"ff3135", "4":"#009b2e",
-    "5":"#009b2e", "6":"#009b2e", "7":"#ce06cb", "A":"#fd9a00", "C":"#fd9a00",
-    "E":"#fd9a00", "SI":"#fd9a00","H":"#fd9a00", "Air":"#ffff00", "B":"#ffff00",
-    "D":"#ffff00", "F":"#ffff00", "M":"#ffff00", "G":"#9ace00", "FS":"#6e6e6e",
-    "GS":"#6e6e6e", "J":"#976900", "Z":"#976900", "L":"#969696", "N":"#ffff00",
-    "Q":"#ffff00", "R":"#ffff00" };
-
 var odkLines_{{ odk_polyline.con_id }} = L.geoJson(null, {
   style: function (feature) {
       return {
-        color: odkColors[feature.properties.id],
+        color: "#990f0f",
         weight: 3,
         opacity: 1
       };
