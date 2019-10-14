@@ -33,9 +33,15 @@ def odk_to_json(odk_con):
 
         curs.execute("""SELECT * FROM \"%s\".\"%s\"""" % (odk_con.db_schema, odk_con.odk_table_name))
         all_features = []
+        ignored_col = [
+            odk_con.polyline_column,
+            odk_con.polygon_column,
+            odk_con.latitude_column,
+            odk_con.longitude_column
+        ]
         for record in curs.fetchall():
             if odk_con.geometry_type == 'polyline':
-                geom_idx = colnames.index(odk_con.geometry_column)
+                geom_idx = colnames.index(odk_con.polyline_column)
                 re_geomerty = record[geom_idx].split(";")
                 coordinates_list = []
                 properties_dict = {}
@@ -45,7 +51,7 @@ def odk_to_json(odk_con):
                         y_coord = coordinate.split(" ")[0]
                         coordinates_list.append((float(x_coord), float(y_coord)))
                         for colname in colnames:
-                            if colname != odk_con.geometry_column:
+                            if colname not in ignored_col:
                                 properties_dict.update({
                                     colname: record[colnames.index(colname)]
                                 })
@@ -62,7 +68,7 @@ def odk_to_json(odk_con):
                 x_coord = float(record[lon_idx])
                 properties_dict = {}
                 for colname in colnames:
-                    if colname != odk_con.latitude_column and colname != odk_con.longitude_column:
+                    if colname not in ignored_col:
                         properties_dict.update({
                             colname: record[colnames.index(colname)]
                         })

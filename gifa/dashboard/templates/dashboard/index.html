@@ -14,6 +14,8 @@
 
 {% include "dashboard/includes/block_legend_modal.html" %}
 
+{% include "dashboard/includes/block_pjt2awlr_modal.html" %}
+
 {% include "dashboard/includes/block_login_modal.html" %}
 
 {% include "dashboard/includes/block_feature_modal.html" %}
@@ -58,6 +60,12 @@ $("#full-extent-btn").click(function() {
 
 $("#legend-btn").click(function() {
   $("#legendModal").modal("show");
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
+$("#pjt2awlr-btn").click(function() {
+  $("#pjt2awlrModal").modal("show");
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });

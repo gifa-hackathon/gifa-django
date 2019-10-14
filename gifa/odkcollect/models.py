@@ -42,12 +42,19 @@ class ODKConnector(models.Model):
         max_length=255,
         verbose_name=_('ODK Table Name')
     )
-    geometry_column = models.CharField(
+    polyline_column = models.CharField(
         max_length=255,
         blank=True,
         null=True,
-        help_text=_('Kolom Geometri untuk Garis dan Poligon'),
-        verbose_name=_('Geometry Column')
+        help_text=_('Kolom Geometri untuk Garis'),
+        verbose_name=_('Polyline Column')
+    )
+    polygon_column = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+        help_text=_('Kolom Geometri untuk Poligon'),
+        verbose_name=_('Polygon Column')
     )
     latitude_column = models.CharField(
         max_length=255,

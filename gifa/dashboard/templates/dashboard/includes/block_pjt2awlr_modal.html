@@ -1,0 +1,29 @@
+{% load staticfiles %}
+
+{% block extra_css %}
+<style>
+@media (min-width: 768px) {
+  .modal-pjt {
+    width: 100%;
+   max-width:1400px;
+  }
+}
+</style>
+{% endblock %}
+
+<div class="modal fade" id="pjt2awlrModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-pjt">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">PJT2AWLR Data</h4>
+      </div>
+      <div class="modal-body">
+        <iframe src="http://pjt2awlr.com/" height="800px" width="100%"></iframe>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
