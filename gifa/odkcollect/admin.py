@@ -11,7 +11,6 @@ class ODKConnectorsAdmin(admin.ModelAdmin):
         'con_nama',
         'db_name',
         'db_username',
-        'geometry_column',
         'geometry_type',
         'publish'
     ]
@@ -20,7 +19,6 @@ class ODKConnectorsAdmin(admin.ModelAdmin):
         'con_nama',
         'db_name',
         'db_username',
-        'geometry_column',
         'geometry_type',
         'publish'
     )

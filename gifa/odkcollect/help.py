@@ -7,32 +7,8 @@ def odk_to_json(odk_con):
     """
     Convert ODK to JSON
     """
-    # db_username = odk_con.db_username
-    # db_password = odk_con.db_password
-    # db_host = odk_con.db_host
-    # db_port = odk_con.db_port
-    # db_name = odk_con.db_name
-    # db_schema = odk_con.db_schema
-    #
-    # geomtype = odk_con.geomeri_type
-    # geomcolmn = odk_con.geometry_column
-    # odktable = odk_con.odk_table_name
-
-    USERNAME = "baleendah_user"
-    PASSWORD = "sodagembira"
-    HOST = "157.245.194.99"
-    PORT = "5432"
-    DATABASE = "baleendah"
-    TABLE_SCHEMA = "public"
-
-    geomtype = "polyline"
-    geomcolmn = "geometri_garis"
-    odktable = "fake_odk"
-
-
     try:
         # Connect Databases
-        print(odk_con.db_password)
         connection = psycopg2.connect(
             user = odk_con.db_username,
             password = odk_con.db_password,
@@ -58,9 +34,9 @@ def odk_to_json(odk_con):
         curs.execute("""SELECT * FROM \"%s\".\"%s\"""" % (odk_con.db_schema, odk_con.odk_table_name))
         all_features = []
         for record in curs.fetchall():
-            geom_idx = colnames.index(odk_con.geometry_column)
-            re_geomerty = record[geom_idx].split(";")
             if odk_con.geometry_type == 'polyline':
+                geom_idx = colnames.index(odk_con.geometry_column)
+                re_geomerty = record[geom_idx].split(";")
                 coordinates_list = []
                 properties_dict = {}
                 for coordinate in re_geomerty:
@@ -77,6 +53,21 @@ def odk_to_json(odk_con):
                         pass
                 all_features.append(Feature(
                     geometry=MultiLineString([coordinates_list]),
+                    properties=properties_dict
+                ))
+            elif odk_con.geometry_type == 'point':
+                lat_idx = colnames.index(odk_con.latitude_column)
+                y_coord = float(record[lat_idx])
+                lon_idx = colnames.index(odk_con.longitude_column)
+                x_coord = float(record[lon_idx])
+                properties_dict = {}
+                for colname in colnames:
+                    if colname != odk_con.latitude_column and colname != odk_con.longitude_column:
+                        properties_dict.update({
+                            colname: record[colnames.index(colname)]
+                        })
+                all_features.append(Feature(
+                    geometry=Point((x_coord, y_coord)),
                     properties=properties_dict
                 ))
         feature_collection = FeatureCollection(all_features)

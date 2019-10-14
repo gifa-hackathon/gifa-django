@@ -44,7 +44,24 @@ class ODKConnector(models.Model):
     )
     geometry_column = models.CharField(
         max_length=255,
+        blank=True,
+        null=True,
+        help_text=_('Kolom Geometri untuk Garis dan Poligon'),
         verbose_name=_('Geometry Column')
+    )
+    latitude_column = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+        help_text=_('Kolom Geometri untuk titik'),
+        verbose_name=_('Latitude Column')
+    )
+    longitude_column = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+        help_text=_('Kolom Geometri untuk titik'),
+        verbose_name=_('Longitude Column')
     )
 
     TYPE_CHOICES = (

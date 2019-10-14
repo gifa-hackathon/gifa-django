@@ -9,7 +9,7 @@ from django.core.serializers import serialize
 from django.http import JsonResponse
 from django.db.models import Q
 
-from dashboard.models import Desa
+from dashboard.models import Desa, Category
 from odkcollect.models import ODKConnector
 
 def gifa_dashboard(request):
@@ -26,10 +26,24 @@ def gifa_dashboard(request):
     )
 
     # ODK Polyline
-    all_odk_polyline = ODKConnector.objects.filter(publish=True)
+    all_odk_polyline = ODKConnector.objects.filter(
+        publish=True,
+        geometry_type='polyline'
+    )
+
+    # ODK Point
+    all_odk_point = ODKConnector.objects.filter(
+        publish=True,
+        geometry_type='point'
+    )
+
+    # category
+    all_category = Category.objects.all()
 
     context = {
         "desa_bndy_json": desa_bndy_json,
-        "all_odk_polyline": all_odk_polyline
+        "all_odk_polyline": all_odk_polyline,
+        "all_odk_point": all_odk_point,
+        "all_category": all_category
     }
     return render(request, 'dashboard/index.html', context)

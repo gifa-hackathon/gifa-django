@@ -7,7 +7,7 @@ def page_home(request):
     """
     Ini kyk semacam controller
     """
-    name = "Rizky"
+    name = "GIFA"
     data = ODKConnector.objects.filter(publish=True) # ini contoh ORM data dari tabel odkcollector_odkconnector
     context = {
         "name": name,
