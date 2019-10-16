@@ -2,12 +2,27 @@
 
 {% block extra_css %}
 <style>
-@media (min-width: 768px) {
-  .modal-xl {
-    width: 90%;
-   max-width:1200px;
-  }
-}
+    @media (min-width: 768px) {
+      .modal-xl {
+        width: 90%;
+        max-width:1200px;
+      }
+    }
+    #featureModal .modal-content {
+        background-color: #fff;
+    }
+    #featureModal .table-striped>tbody>tr:nth-of-type(odd) {
+        background-color: #47798f9e;
+    }
+    #featureModal .table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th,
+    #featureModal .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th,
+    #featureModal .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
+        border: 2px solid #28375b;
+        color: #091636;
+    }
+    #featureModal .text-primary {
+        color: #28375b;
+    }
 </style>
 {% endblock %}
 

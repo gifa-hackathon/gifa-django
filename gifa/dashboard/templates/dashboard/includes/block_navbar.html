@@ -1,13 +1,46 @@
 {% load staticfiles %}
 
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+{% block extra_css %}
+<style>
+    #gifaNavbar {
+        padding: 8px;
+        background-color: #fff;
+        border-color: #c6c6c6;
+    }
+    #gifaIcon {
+        width: 32px;
+        margin: 2px;
+        margin-left:10px;
+    }
+    #navbarMenu {
+        margin-left: 5%;
+    }
+    #navbarMenu>.open>a,
+    #navbarMenu>.open>a:focus,
+    #navbarMenu>.open>a:hover {
+        color: #1d4cbc;
+        background-color: #f8f8f8;
+    }
+    #navbarMenu>li>a,
+    #navbarMenu>li>a>i{
+        color: #506eb5;
+        font-size: 1.05em;
+    }
+    #navbarMenu>li>ul>li>a,
+    #navbarMenu>li>ul>li>a>i{
+        color: #506eb5;
+    }
+</style>
+{% endblock %}
+
+<div id="gifaNavbar" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container-fluid">
     <div class="navbar-header">
       <div class="navbar-icon-container">
         <a href="#" class="navbar-icon pull-right visible-xs" id="nav-btn"><i class="fa fa-bars fa-lg white"></i></a>
         <a href="#" class="navbar-icon pull-right visible-xs" id="sidebar-toggle-btn"><i class="fa fa-search fa-lg white"></i></a>
       </div>
-      <a class="navbar-brand" href="#">GIFA</a>
+      <img id="gifaIcon" src="{% static 'icon/gifa.PNG' %}">
     </div>
     <div class="navbar-collapse collapse">
       <form class="navbar-form navbar-right" role="search">
@@ -16,7 +49,7 @@
             <span id="searchicon" class="fa fa-search form-control-feedback"></span>
         </div>
       </form>
-      <ul class="nav navbar-nav">
+      <ul id="navbarMenu" class="nav navbar-nav">
         <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="about-btn"><i class="fa fa-question-circle white"></i>&nbsp;&nbsp;About</a></li>
         <li class="dropdown">
           <a id="toolsDrop" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe white"></i>&nbsp;&nbsp;Tools <b class="caret"></b></a>

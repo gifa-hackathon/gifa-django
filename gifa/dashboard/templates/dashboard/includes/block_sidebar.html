@@ -1,5 +1,46 @@
 {% load staticfiles %}
 
+{% block extra_css %}
+<style>
+    body{
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-size: 14px;
+        line-height: 1.42857143;
+        background-color: #fff;
+    }
+    #sidebar{
+        margin-top:16px;
+    }
+    #sidebar .panel-default>.panel-heading {
+        color: #fff;
+        background-color: #506eb5;
+        border-color: #91a4d1;
+    }
+    #sidebar .panel {
+        color: #fff;
+        background-color: #54b1c291;
+        border-color: #dee8ff;
+    }
+    #sidebar .btn-default {
+        color: #002ec8;
+        background-color: #fff;
+        border-color: #ccc;
+    }
+    #sidebar .table-hover>tbody>tr:hover {
+        background-color: #82c0dc99;
+        -webkit-transition: background-color 0.1s ease-in;
+        transition: background-color 0.1s ease-in;
+        -webkit-transition-delay: 0.1s;
+        transition-delay: 0.1s;
+    }
+    #sidebar .sidebar-table .feature-row>.feature-name,
+    #sidebar .sidebar-table i{
+        color: #506eb5;
+        font-size: 1.1em;
+    }
+</style>
+{% endblock %}
+
 <div id="sidebar">
   <div class="sidebar-wrapper">
     <div class="panel panel-default" id="features">
