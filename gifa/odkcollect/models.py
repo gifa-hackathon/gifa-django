@@ -2,6 +2,8 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import MaxValueValidator
 
+from colorfield.fields import ColorField
+
 class ODKConnector(models.Model):
     con_id = models.BigIntegerField(
         primary_key=True,
@@ -62,6 +64,10 @@ class ODKConnector(models.Model):
         null=True,
         help_text=_('Kolom Geometri untuk titik'),
         verbose_name=_('Geopoint Column')
+    )
+    object_color = ColorField(
+        default='#213693',
+        verbose_name=_('Object Color')
     )
     image_column = models.CharField(
         max_length=255,

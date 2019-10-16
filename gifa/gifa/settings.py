@@ -146,6 +146,7 @@ INSTALLED_APPS += [
     'bootstrapform',
     'easy_thumbnails',
     'leaflet',
+    'colorfield',
     'dashboard.apps.DashboardConfig',
     'odkcollect.apps.OdkcollectConfig',
 ]

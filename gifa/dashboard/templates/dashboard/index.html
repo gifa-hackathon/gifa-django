@@ -222,7 +222,7 @@ var desaBndy = L.geoJson({{ desa_bndy_json|safe }}, {
 var odkLines_{{ odk_polyline.con_id }} = L.geoJson(null, {
   style: function (feature) {
       return {
-        color: "#990f0f",
+        color: "{{ odk_polyline.object_color }}",
         weight: 3,
         opacity: 1
       };
@@ -248,8 +248,8 @@ var odkLines_{{ odk_polyline.con_id }} = L.geoJson(null, {
       mouseover: function (e) {
         var layer = e.target;
         layer.setStyle({
-          weight: 3,
-          color: "#00FFFF",
+          weight: 4,
+          color: "{{ odk_polyline.object_color }}",
           opacity: 1
         });
         if (!L.Browser.ie && !L.Browser.opera) {
@@ -264,6 +264,7 @@ var odkLines_{{ odk_polyline.con_id }} = L.geoJson(null, {
 });
 $.getJSON("{% url 'odkcollect:get_odk_geojson' odk_polyline.con_id %}", function (data) {
   odkLines_{{ odk_polyline.con_id }}.addData(data);
+  {% if forloop.counter == 1 %}map.addLayer(odkLines_{{ odk_polyline.con_id }}){% endif %};
 });
 {% endfor %}
 
@@ -271,7 +272,7 @@ $.getJSON("{% url 'odkcollect:get_odk_geojson' odk_polyline.con_id %}", function
 var odkPolygon_{{ odk_polygon.con_id }} = L.geoJson(null, {
   style: function (feature) {
       return {
-          color: "#213693",
+          color: "{{ odk_polygon.object_color }}",
           fillOpacity: 0.2,
           fill: true,
           weight: 4,
@@ -300,8 +301,8 @@ var odkPolygon_{{ odk_polygon.con_id }} = L.geoJson(null, {
       mouseover: function (e) {
         var layer = e.target;
         layer.setStyle({
-          weight: 3,
-          color: "#2eafb4",
+          weight: 5,
+          color: "{{ odk_polygon.object_color }}",
           opacity: 1,
           fillOpacity: 0.6
         });
@@ -317,6 +318,7 @@ var odkPolygon_{{ odk_polygon.con_id }} = L.geoJson(null, {
 });
 $.getJSON("{% url 'odkcollect:get_odk_geojson' odk_polygon.con_id %}", function (data) {
   odkPolygon_{{ odk_polygon.con_id }}.addData(data);
+  {% if forloop.counter == 1 %}map.addLayer(odkPolygon_{{ odk_polygon.con_id }}){% endif %};
 });
 {% endfor %}
 
@@ -484,7 +486,8 @@ var groupedOverlays = {
   {% for category in all_category %}
   "{{ category.category_name }}": {
     {% for con in category.odk_connections.all %}
-    "{% if con.geometry_type == 'point' %}<img src='{% static 'bootleaf/img/museum.png' %}' width='24' height='28'>&nbsp;{{ con.con_nama }}{% else %}{{ con.con_nama }}{% endif %}": {% if con.geometry_type == 'polyline' %}odkLines_{{ con.con_id }}{% elif con.geometry_type == 'point' %}odkPointLayer_{{ con.con_id }}{% elif con.geometry_type == 'polygon' %}odkPolygon_{{ con.con_id }}{% endif %},
+    "{% if con.geometry_type == 'point' %}<img src='{% static 'bootleaf/img/museum.png' %}' width='24' height='28'>&nbsp;{{ con.con_nama }}{% elif con.geometry_type == 'polygon' %}<div style='background-color: {{ con.object_color }};padding:0px;width:1.8em;height:1.5em;display:inline-block;'></div>&nbsp;{{ con.con_nama }}{% else %}<div style='border-bottom: 4px solid {{ con.object_color }};margin-bottom:0.3em;width:1.8em;display:inline-block;'></div>&nbsp;{{ con.con_nama }}{% endif %}":
+    {% if con.geometry_type == 'polyline' %}odkLines_{{ con.con_id }}{% elif con.geometry_type == 'point' %}odkPointLayer_{{ con.con_id }}{% elif con.geometry_type == 'polygon' %}odkPolygon_{{ con.con_id }}{% endif %},
     {% endfor %}
   },
   {% endfor %}
