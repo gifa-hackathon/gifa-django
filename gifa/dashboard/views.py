@@ -31,6 +31,12 @@ def gifa_dashboard(request):
         geometry_type='polyline'
     )
 
+    # ODK Polygon
+    all_odk_polygon = ODKConnector.objects.filter(
+        publish=True,
+        geometry_type='polygon'
+    )
+
     # ODK Point
     all_odk_point = ODKConnector.objects.filter(
         publish=True,
@@ -43,6 +49,7 @@ def gifa_dashboard(request):
     context = {
         "desa_bndy_json": desa_bndy_json,
         "all_odk_polyline": all_odk_polyline,
+        "all_odk_polygon": all_odk_polygon,
         "all_odk_point": all_odk_point,
         "all_category": all_category
     }

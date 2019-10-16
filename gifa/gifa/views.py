@@ -5,12 +5,7 @@ from odkcollect.models import ODKConnector
 
 def page_home(request):
     """
-    Ini kyk semacam controller
+    Page Home
     """
-    name = "GIFA"
-    data = ODKConnector.objects.filter(publish=True) # ini contoh ORM data dari tabel odkcollector_odkconnector
-    context = {
-        "name": name,
-        "data": data
-    }
+    context = {}
     return render(request, 'gifa/page_home.html', context)

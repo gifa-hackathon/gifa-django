@@ -131,7 +131,7 @@ function syncSidebar() {
   odkPoint_{{ odk_point.con_id }}.eachLayer(function (layer) {
     if (map.hasLayer(odkPointLayer_{{ odk_point.con_id }})) {
       if (map.getBounds().contains(layer.getLatLng())) {
-        $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="{% static "bootleaf/img/museum.png" %}"></td><td class="feature-name">' + layer.feature.properties.field1 + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+        $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="{% static "bootleaf/img/museum.png" %}"></td><td class="feature-name">' + Object.values(layer.feature.properties)[0] + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       }
     }
   });
@@ -264,6 +264,59 @@ var odkLines_{{ odk_polyline.con_id }} = L.geoJson(null, {
 });
 $.getJSON("{% url 'odkcollect:get_odk_geojson' odk_polyline.con_id %}", function (data) {
   odkLines_{{ odk_polyline.con_id }}.addData(data);
+});
+{% endfor %}
+
+{% for odk_polygon in all_odk_polygon %}
+var odkPolygon_{{ odk_polygon.con_id }} = L.geoJson(null, {
+  style: function (feature) {
+      return {
+          color: "#213693",
+          fillOpacity: 0.2,
+          fill: true,
+          weight: 4,
+          opacity: 1,
+          clickable: false
+      };
+  },
+  onEachFeature: function (feature, layer) {
+    if (feature.properties) {
+      var tableContent ="";
+      $.each(feature.properties, function(key,value) {
+          tableContent = tableContent + "<tr><th>" + key + "</th><td>" + value + "</td></tr>";
+      });
+      var content = "<table class='table table-striped table-bordered table-condensed'>" +
+          tableContent + "<table>";
+      layer.on({
+        click: function (e) {
+          $("#feature-title").html('{{ odk_polygon.con_nama }}');
+          $("#feature-info").html(content);
+          $("#featureModal").modal("show");
+
+        }
+      });
+    }
+    layer.on({
+      mouseover: function (e) {
+        var layer = e.target;
+        layer.setStyle({
+          weight: 3,
+          color: "#2eafb4",
+          opacity: 1,
+          fillOpacity: 0.6
+        });
+        if (!L.Browser.ie && !L.Browser.opera) {
+          layer.bringToFront();
+        }
+      },
+      mouseout: function (e) {
+        odkPolygon_{{ odk_polygon.con_id }}.resetStyle(e.target);
+      }
+    });
+  }
+});
+$.getJSON("{% url 'odkcollect:get_odk_geojson' odk_polygon.con_id %}", function (data) {
+  odkPolygon_{{ odk_polygon.con_id }}.addData(data);
 });
 {% endfor %}
 
@@ -431,7 +484,7 @@ var groupedOverlays = {
   {% for category in all_category %}
   "{{ category.category_name }}": {
     {% for con in category.odk_connections.all %}
-    "{% if con.geometry_type == 'point' %}<img src='{% static 'bootleaf/img/museum.png' %}' width='24' height='28'>&nbsp;{{ con.con_nama }}{% else %}{{ con.con_nama }}{% endif %}": {% if con.geometry_type == 'polyline' %}odkLines_{{ con.con_id }}{% elif con.geometry_type == 'point' %}odkPointLayer_{{ con.con_id }}{% endif %},
+    "{% if con.geometry_type == 'point' %}<img src='{% static 'bootleaf/img/museum.png' %}' width='24' height='28'>&nbsp;{{ con.con_nama }}{% else %}{{ con.con_nama }}{% endif %}": {% if con.geometry_type == 'polyline' %}odkLines_{{ con.con_id }}{% elif con.geometry_type == 'point' %}odkPointLayer_{{ con.con_id }}{% elif con.geometry_type == 'polygon' %}odkPolygon_{{ con.con_id }}{% endif %},
     {% endfor %}
   },
   {% endfor %}

@@ -221,3 +221,5 @@ BOWER_INSTALLED_APPS = (
     'eonasdan-bootstrap-datetimepicker#4.17.47',
     'leaflet-routing-machine#3.2.12'
 )
+
+ODK_AGGREGATE_HOST = LOCAL_ODK_AGGREGATE_HOST

@@ -42,33 +42,33 @@ class ODKConnector(models.Model):
         max_length=255,
         verbose_name=_('ODK Table Name')
     )
-    polyline_column = models.CharField(
+    geotrace_column = models.CharField(
         max_length=255,
         blank=True,
         null=True,
         help_text=_('Kolom Geometri untuk Garis'),
-        verbose_name=_('Polyline Column')
+        verbose_name=_('Geotrace Column')
     )
-    polygon_column = models.CharField(
+    geoshape_column = models.CharField(
         max_length=255,
         blank=True,
         null=True,
         help_text=_('Kolom Geometri untuk Poligon'),
-        verbose_name=_('Polygon Column')
+        verbose_name=_('Geoshape Column')
     )
-    latitude_column = models.CharField(
+    geopoint_column = models.CharField(
         max_length=255,
         blank=True,
         null=True,
         help_text=_('Kolom Geometri untuk titik'),
-        verbose_name=_('Latitude Column')
+        verbose_name=_('Geopoint Column')
     )
-    longitude_column = models.CharField(
+    image_column = models.CharField(
         max_length=255,
         blank=True,
         null=True,
-        help_text=_('Kolom Geometri untuk titik'),
-        verbose_name=_('Longitude Column')
+        help_text=_('Kolom untuk gambar, apabila lebih dari satu, gunakan (;) sebagai pemisah'),
+        verbose_name=_('Image Column')
     )
 
     TYPE_CHOICES = (
@@ -79,6 +79,7 @@ class ODKConnector(models.Model):
     geometry_type = models.CharField(
         max_length=255,
         choices=TYPE_CHOICES,
+        help_text=_('Tipe geometri, satu layer hanya bisa memiliki satu jenis geometri'),
         verbose_name=_('Geometry Type')
     )
     publish = models.BooleanField(
