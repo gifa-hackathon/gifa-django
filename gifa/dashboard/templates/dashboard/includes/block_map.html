@@ -1,3 +1,39 @@
 {% load staticfiles %}
 
+{% block extra_css %}
+<style>
+    .leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
+        border: 1px solid rgb(80, 110, 181);
+    }
+    #map .leaflet-left {
+        margin-top: 18px;
+    }
+    #map .leaflet-right {
+        margin-top: 18px;
+    }
+    #map .leaflet-control-layers-expanded {
+        padding: 6px 10px 6px 6px;
+        color: #080843;
+        background: #9ed3dcc9;
+        font-size: 1.1em;
+    }
+    #map .leaflet-control-layers-separator {
+        height: 0;
+        border-top: 1px solid #506eb5;
+        margin: 5px -10px 5px -6px;
+    }
+    #map .leaflet-bar a, .leaflet-bar a:hover {
+        background-color: #9ed3dcc9;
+        border-bottom: 1px solid #506eb5;
+        width: 26px;
+        height: 26px;
+        line-height: 26px;
+        display: block;
+        text-align: center;
+        text-decoration: none;
+        color: #080843;
+    }
+</style>
+{% endblock %}
+
 <div id="map"></div>
