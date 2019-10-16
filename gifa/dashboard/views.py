@@ -43,6 +43,13 @@ def gifa_dashboard(request):
         geometry_type='point'
     )
 
+    # Marker icon resource from Map Box
+    marker_url = "https://api.tiles.mapbox.com/v3/marker/pin-s-circle-stroked"
+
+    # BIG Basemap Services
+    urlPetaBIG = "https://portal.ina-sdi.or.id/arcgis/rest/services/IGD/RupabumiIndonesia/MapServer"
+    urlBaruPetaBIG = "http://palapa.big.go.id:8080/geoserver/gwc/service/tms/1.0.0/basemap_rbi:basemap@EPSG:3857@png/{z}/{x}/{-y}.png"
+
     # category
     all_category = Category.objects.all()
 
@@ -51,6 +58,9 @@ def gifa_dashboard(request):
         "all_odk_polyline": all_odk_polyline,
         "all_odk_polygon": all_odk_polygon,
         "all_odk_point": all_odk_point,
-        "all_category": all_category
+        "all_category": all_category,
+        "marker_url": marker_url,
+        "urlPetaBIG": urlPetaBIG,
+        "urlBaruPetaBIG": urlBaruPetaBIG
     }
     return render(request, 'dashboard/index.html', context)

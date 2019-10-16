@@ -131,7 +131,7 @@ function syncSidebar() {
   odkPoint_{{ odk_point.con_id }}.eachLayer(function (layer) {
     if (map.hasLayer(odkPointLayer_{{ odk_point.con_id }})) {
       if (map.getBounds().contains(layer.getLatLng())) {
-        $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="{% static "bootleaf/img/museum.png" %}"></td><td class="feature-name">' + Object.values(layer.feature.properties)[0] + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+        $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="18" height="40" src="{{ marker_url }}+{{ odk_point.object_color|slice:"1:" }}.png"></td><td class="feature-name">' + Object.values(layer.feature.properties)[0] + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       }
     }
   });
@@ -151,20 +151,96 @@ var osmMapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 	maxZoom: 19,
 	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 });
-var cartoLight = L.tileLayer("https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png", {
-  maxZoom: 19,
-  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://cartodb.com/attributions">CartoDB</a>'
+var osmHOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+	maxZoom: 19,
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Tiles style by <a href="https://www.hotosm.org/" target="_blank">Humanitarian OpenStreetMap Team</a> hosted by <a href="https://openstreetmap.fr/" target="_blank">OpenStreetMap France</a>'
 });
-var usgsImagery = L.layerGroup([L.tileLayer("http://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}", {
-  maxZoom: 15,
-}), L.tileLayer.wms("http://raster.nationalmap.gov/arcgis/services/Orthoimagery/USGS_EROS_Ortho_SCALE/ImageServer/WMSServer?", {
-  minZoom: 16,
-  maxZoom: 19,
-  layers: "0",
-  format: 'image/jpeg',
-  transparent: true,
-  attribution: "Aerial Imagery courtesy USGS"
-})]);
+var openTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+	maxZoom: 19,
+	attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+});
+var esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+});
+var googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
+});
+var googleHybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
+});
+var googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
+});
+var googleTerrain = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
+});
+var petaDasarBIG = L.esri.tiledMapLayer({
+    url: '{{ urlPetaBIG }}',
+});
+var petaDasarBaruBIG = L.tileLayer('{{ urlBaruPetaBIG }}', {
+    attribution: '&copy; <a href="#">BIG</a>'
+});
+var iconLayersControl = new L.Control.IconLayers(
+    [
+        {
+            title: 'OSM Mapnik',
+            layer: osmMapnik,
+            icon: '{% static "icon/osm_mapnik.png" %}'
+        },
+        {
+            title: 'OSM HOT',
+            layer: osmHOT,
+            icon: '{% static "icon/osm_hot.png" %}'
+        },
+        {
+            title: 'Open Topo',
+            layer: openTopoMap,
+            icon: '{% static "icon/topo.png" %}'
+        },
+        {
+            title: 'ESRI Imagery',
+            layer: esri_WorldImagery,
+            icon: '{% static "icon/esri_img.png" %}'
+        },
+        {
+            title: 'Google Street',
+            layer: googleStreets,
+            icon: '{% static "icon/google_street.png" %}'
+        },
+        {
+            title: 'Google Hybrid',
+            layer: googleHybrid,
+            icon: '{% static "icon/google_hybd.png" %}'
+        },
+        {
+            title: 'Google Satelite',
+            layer: googleSat,
+            icon: '{% static "icon/google_sat.png" %}'
+        },
+        {
+            title: 'Google Terrain',
+            layer: googleTerrain,
+            icon: '{% static "icon/google_terain.png" %}'
+        },
+        {
+            title: 'RBI 2017',
+            layer: petaDasarBIG,
+            icon: '{% static "icon/rbi_2017.png" %}'
+        },
+        {
+            title: 'RBI 2019',
+            layer: petaDasarBaruBIG,
+            icon: '{% static "icon/rbi_2019.png" %}'
+        },
+    ], {
+    position: 'bottomleft',
+    maxLayersInRow: 5
+    }
+);
 
 /* InaRISK */
 var floodhzrdLayer = L.esri.imageMapLayer({
@@ -336,8 +412,8 @@ var odkPoint_{{ odk_point.con_id }} = L.geoJson(null, {
   pointToLayer: function (feature, latlng) {
     return L.marker(latlng, {
       icon: L.icon({
-        iconUrl: "{% static 'bootleaf/img/museum.png' %}",
-        iconSize: [24, 28],
+        iconUrl: "{{ marker_url }}+{{ odk_point.object_color|slice:"1:" }}.png",
+        iconSize: [20, 52],
         iconAnchor: [12, 28],
         popupAnchor: [0, -25]
       }),
@@ -361,7 +437,7 @@ var odkPoint_{{ odk_point.con_id }} = L.geoJson(null, {
           highlight.clearLayers().addLayer(L.circleMarker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], highlightStyle));
         }
       });
-      $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="{% static "bootleaf/img/museum.png" %}"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+      $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="{{ marker_url }}+{{ odk_point.object_color|slice:"1:" }}.png"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
     }
   }
 });
@@ -473,11 +549,10 @@ if (document.body.clientWidth <= 767) {
   var isCollapsed = false;
 }
 
-var baseLayers = {
-  "Peta OSM": osmMapnik,
-  "Street Map": cartoLight,
-  "Aerial Imagery": usgsImagery
-};
+var baseLayers = {/*"Peta OSM": osmMapnik, # switch to iconlayers*/};
+iconLayersControl.addTo(map);
+osmMapnik.addTo(map);
+iconLayersControl.setActiveLayer(osmMapnik);
 
 var groupedOverlays = {
   "Batas Administrasi": {
@@ -486,7 +561,7 @@ var groupedOverlays = {
   {% for category in all_category %}
   "{{ category.category_name }}": {
     {% for con in category.odk_connections.all %}
-    "{% if con.geometry_type == 'point' %}<img src='{% static 'bootleaf/img/museum.png' %}' width='24' height='28'>&nbsp;{{ con.con_nama }}{% elif con.geometry_type == 'polygon' %}<div style='background-color: {{ con.object_color }};padding:0px;width:1.8em;height:1.5em;display:inline-block;'></div>&nbsp;{{ con.con_nama }}{% else %}<div style='border-bottom: 4px solid {{ con.object_color }};margin-bottom:0.3em;width:1.8em;display:inline-block;'></div>&nbsp;{{ con.con_nama }}{% endif %}":
+    "{% if con.geometry_type == 'point' %}<img src='{{ marker_url }}+{{ con.object_color|slice:"1:" }}.png' width='18' height='40'>&nbsp;{{ con.con_nama }}{% elif con.geometry_type == 'polygon' %}<div style='background-color: {{ con.object_color }};padding:0px;width:1.4em;height:1.4em;display:inline-block;'></div>&nbsp;{{ con.con_nama }}{% else %}<div style='border-bottom: 4px solid {{ con.object_color }};margin-bottom:0.3em;width:1.5em;display:inline-block;'></div>&nbsp;{{ con.con_nama }}{% endif %}":
     {% if con.geometry_type == 'polyline' %}odkLines_{{ con.con_id }}{% elif con.geometry_type == 'point' %}odkPointLayer_{{ con.con_id }}{% elif con.geometry_type == 'polygon' %}odkPolygon_{{ con.con_id }}{% endif %},
     {% endfor %}
   },
