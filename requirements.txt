@@ -22,4 +22,4 @@ geopandas==0.4.1
 django-leaflet==0.24.0
 geojson==2.5.0
 django-colorfield==0.1.15
-#uwsgi
+uwsgi==2.0.18
