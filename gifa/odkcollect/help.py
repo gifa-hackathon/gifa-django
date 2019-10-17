@@ -9,7 +9,13 @@ def read_odk_image(odk_con, properties_dict, record, colnames):
     """
     Read ODK Image and put inside properties
     """
-    image_columns = [i.strip() for i in odk_con.image_column.split(";")]
+    if odk_con.geometry_type == 'polygon':
+        image_columns = [i.strip() for i in odk_con.geoshape_image.split(";")]
+    elif odk_con.geometry_type == 'polyline':
+        image_columns = [i.strip() for i in odk_con.geotrace_image.split(";")]
+    elif odk_con.geometry_type == 'point':
+        image_columns = [i.strip() for i in odk_con.geopoint_image.split(";")]
+
     for image in image_columns:
         odk_agrgt_url = '%s%s%s%s%s%s%s%s%s' % (
             settings.ODK_AGGREGATE_HOST,
