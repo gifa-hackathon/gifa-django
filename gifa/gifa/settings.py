@@ -220,7 +220,8 @@ BOWER_INSTALLED_APPS = (
     'font-awesome#5.8.2',
     'bootstrap-show-password#1.2.1',
     'eonasdan-bootstrap-datetimepicker#4.17.47',
-    'leaflet-routing-machine#3.2.12'
+    'leaflet-routing-machine#3.2.12',
+    'leaflet.wms#0.2.0'
 )
 
 ODK_AGGREGATE_HOST = LOCAL_ODK_AGGREGATE_HOST
