@@ -255,6 +255,28 @@ var floodriskLayer = L.esri.imageMapLayer({
     url: "http://service1.inarisk.bnpb.go.id:6080/arcgis/rest/services/inaRISK/layer_risiko_banjir/ImageServer"
 });
 
+/* WMS Layers */
+var skyWmsLayer = L.wms.source(
+    "http://gifa.wgs84on.site:8080/geoserver/baleendah/wms",
+    {
+        "format": "image/png",
+        "transparent": "true",
+        "attribution": "<a href='#'>SKY Volunteer</a>",
+        "info_format": "text/html",
+        "tiled": true
+    }
+);
+
+var dummy = L.wms.source(
+    "http://172.104.61.157:8080/geoserver/geonode/wms",
+    {
+        "format": "image/png",
+        "transparent": "true",
+        "attribution": "<a href='#'>SKY Volunteer</a>",
+        "info_format": "text/html",
+        "tiled": true
+    }
+);
 
 /* Overlay Layers */
 var highlight = L.geoJson(null);
@@ -557,6 +579,13 @@ iconLayersControl.setActiveLayer(osmMapnik);
 var groupedOverlays = {
   "Batas Administrasi": {
     "Batas Desa": desaBndy,
+  },
+  "SKY Volunteer (Baleendah)": {
+    "DEM Banjir (2018)": skyWmsLayer.getLayer("baleendah:DEM_BANJIR_BALEENDAH"),
+    "TEST2": dummy.getLayer("geonode:hillshade_2"),
+    // "Foto Udara Banjir (2018)": skyWmsLayer.getLayer("baleendah:DEM_BANJIR_BALEENDAH"),
+    // "DEM (2019)": skyWmsLayer.getLayer("baleendah:DEM_BANJIR_BALEENDAH"),
+    // "Foto Udara (2019)": skyWmsLayer.getLayer("baleendah:DEM_BANJIR_BALEENDAH"),
   },
   {% for category in all_category %}
   "{{ category.category_name }}": {
