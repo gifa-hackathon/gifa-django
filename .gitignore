@@ -7,7 +7,6 @@ supervisord-rq.conf
 *.DS_Store
 .idea
 .vagrant
-gifa/static/*
 gifa/components/*
 gifa/uploaded/*
 gifa/gifa/db_settings.py

@@ -448,11 +448,19 @@ $.getJSON("{% url 'odkcollect:get_odk_geojson' odk_point.con_id %}", function (d
 {% endfor %}
 
 map = L.map("map", {
+  minZoom: 9,
   zoom: 10,
   center: [-6.991983, 107.626592],
   layers: [osmMapnik, desaBndy, markerClusters, highlight],
   zoomControl: false,
   attributionControl: false
+});
+
+// Setting the layer boundary over Baleendah
+const bounds = L.latLngBounds([[-6.8, 107.24], [-7.33, 108.20]]);
+  map.setMaxBounds(bounds);
+  map.on('drag', function() {
+    map.panInsideBounds(bounds, {animate: false});
 });
 
 /* Layer control listeners that allow for a single markerClusters layer */

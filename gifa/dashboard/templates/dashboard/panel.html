@@ -1,0 +1,27 @@
+{% extends "dashboard/base_viz.html" %}
+
+{% block content %}
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'viz/css/viz.css' %}">
+<div id="dataviz-1">
+	{% block scripts%}
+	<script src="{% static 'viz/js/viz.js' %}"></script>
+	{% endblock %}
+
+
+	<button class="spaced" onClick="switchChartStyle('instant')">Bars represents points in time</button>
+	<button class="spaced" onClick="switchChartStyle('timespan')">Bars represent spans of time</button>
+	<div class="spaced" style="float: left;">(affects the x axis ticks and the bar spacing)</div>
+
+	<div style="clear: both;"></div>
+
+	<div class="svg-container" id="sc-one">
+	    <svg id="test1"></svg>
+	</div>
+	<div class="svg-container" id="sc-two">
+	    <svg id="test2"></svg>
+	</div>
+</div>
+
+{% endblock %}
