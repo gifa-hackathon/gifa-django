@@ -99,12 +99,7 @@ def read_odk_image(odk_con, properties_dict, record, colnames):
     """
     Read ODK Image and put inside properties
     """
-    if odk_con.geometry_type == 'polygon':
-        image_columns = [i.strip() for i in odk_con.geoshape_image.split(";")]
-    elif odk_con.geometry_type == 'polyline':
-        image_columns = [i.strip() for i in odk_con.geotrace_image.split(";")]
-    elif odk_con.geometry_type == 'point':
-        image_columns = [i.strip() for i in odk_con.geopoint_image.split(";")]
+    image_columns = [i.strip() for i in odk_con.geometry_image.split(";")]
 
     for image in image_columns:
         odk_agrgt_url = '%s%s%s%s%s%s%s%s%s' % (
@@ -140,7 +135,7 @@ def odk_to_json(odk_con):
         cursGetCol = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         # Initial table name
-        odk_table_name = '%s_CORE' % odk_con.odk_table_name.upper().replace('_','')
+        odk_table_name = '%s_CORE' % odk_con.odk_table_name.upper()
 
         # Get Column name and type
         colnames, coltypes = [], []
@@ -155,26 +150,26 @@ def odk_to_json(odk_con):
         curs.execute("""SELECT * FROM \"%s\".\"%s\"""" % (odk_con.db_schema, odk_table_name))
         all_features = []
         ignored_col = []
-        linelen = len(odk_con.geotrace_column) if odk_con.geotrace_column else False
-        polygonelen = len(odk_con.geoshape_column) if odk_con.geoshape_column else False
-        pointlen = len(odk_con.geopoint_column) if odk_con.geopoint_column else False
+        # linelen = len(odk_con.geotrace_column) if odk_con.geotrace_column else False
+        # polygonelen = len(odk_con.geoshape_column) if odk_con.geoshape_column else False
+        # pointlen = len(odk_con.geopoint_column) if odk_con.geopoint_column else False
         for colname in colnames:
-            if linelen and colname[-linelen:] == odk_con.geotrace_column.upper():
+            if colname == "%s_%s" % (odk_con.group_column.upper(), odk_con.geometry_column.upper()):
                 polyline_column = colname
                 ignored_col.append(colname)
-            elif polygonelen and colname[-polygonelen:] == odk_con.geoshape_column.upper():
-                polygon_column = colname
-                ignored_col.append(colname)
-            elif pointlen and colname[-pointlen-4:-4] == odk_con.geopoint_column.upper():
-                if colname[-3:] == 'LAT':
-                    latitude_column = colname
-                elif colname[-3:] == 'LNG':
-                    longitude_column = colname
-                elif colname[-3:] == 'ALT':
-                    altitude_column = colname
-                elif colname[-3:] == 'ACC':
-                    accuracy_column = colname
-                ignored_col.append(colname)
+            # elif polygonelen and colname[-polygonelen:] == odk_con.geoshape_column.upper():
+            #     polygon_column = colname
+            #     ignored_col.append(colname)
+            # elif pointlen and colname[-pointlen-4:-4] == odk_con.geopoint_column.upper():
+            #     if colname[-3:] == 'LAT':
+            #         latitude_column = colname
+            #     elif colname[-3:] == 'LNG':
+            #         longitude_column = colname
+            #     elif colname[-3:] == 'ALT':
+            #         altitude_column = colname
+            #     elif colname[-3:] == 'ACC':
+            #         accuracy_column = colname
+            #     ignored_col.append(colname)
         for record in curs.fetchall():
             if odk_con.geometry_type == 'polyline':
                 geom_idx = colnames.index(polyline_column)

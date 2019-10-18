@@ -150,6 +150,7 @@ INSTALLED_APPS += [
     'colorfield',
     'dashboard.apps.DashboardConfig',
     'odkcollect.apps.OdkcollectConfig',
+    'mapservice.apps.MapserviceConfig',
 ]
 
 
