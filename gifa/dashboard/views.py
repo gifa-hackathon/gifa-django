@@ -64,3 +64,7 @@ def gifa_dashboard(request):
         "urlBaruPetaBIG": urlBaruPetaBIG
     }
     return render(request, 'dashboard/index.html', context)
+
+
+def panelVisualisation(request):
+    return render(request, 'dashboard/panel.html')

@@ -1,0 +1,36 @@
+text {
+    font: 12px sans-serif;
+}
+.spaced {
+    float: left;
+    margin: 10px 0 10px 10px;
+}
+.svg-container {
+    display: block;
+    position: absolute;
+    top: 30px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+html, body, svg {
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+    width: 100%;
+}
+.nvd3 line.nv-guideline { /* Hide the guideline */
+    display: none;
+    stroke-width: 0.0;
+}
+.nvd3 .nv-bars rect { /* fix the hover guideline to be snappy */
+    transition: fill-opacity 0ms linear;
+    -moz-transition: fill-opacity 0ms linear;
+    -webkit-transition: fill-opacity 0ms linear;
+}
+.nvd3 .nv-x .nv-axis .x-axis-tick-mark {
+    stroke: #000; /* black tick marks */
+}
+.nvd3 .nv-y .nv-axis .tick.zero line {
+    stroke: #000; /* black line for the x axis */
+}

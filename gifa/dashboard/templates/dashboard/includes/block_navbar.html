@@ -40,7 +40,9 @@
         <a href="#" class="navbar-icon pull-right visible-xs" id="nav-btn"><i class="fa fa-bars fa-lg white"></i></a>
         <a href="#" class="navbar-icon pull-right visible-xs" id="sidebar-toggle-btn"><i class="fa fa-search fa-lg white"></i></a>
       </div>
-      <img id="gifaIcon" src="{% static 'icon/gifa.png' %}">
+        <a href='/dashboard' onclick="document.location.href=/">
+          <img id="gifaIcon" src="{% static 'icon/gifa.png' %}">
+        </a>
     </div>
     <div class="navbar-collapse collapse">
       <form class="navbar-form navbar-right" role="search">
@@ -71,6 +73,7 @@
             </ul>
         </li>
         <li class="hidden-xs"><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="list-btn"><i class="fa fa-list white"></i>&nbsp;&nbsp;POI List</a></li>
+        <li><a href="/dashboard/dataviz"><i class="fa fa-hospital-o"></i>Disaster Assessment</a></li>
       </ul>
     </div><!--/.navbar-collapse -->
   </div>
