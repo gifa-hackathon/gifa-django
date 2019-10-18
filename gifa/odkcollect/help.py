@@ -2,7 +2,8 @@ import psycopg2
 import psycopg2.extras
 
 from django.conf import settings
-from django.contrib.gis.geos import Point, Polygon
+from django.db import connection
+from django.contrib.gis.geos import Point, Polygon, LineString
 
 from geojson import (
     MultiLineString,
@@ -18,29 +19,80 @@ from dashboard.models import (
     SesarLembang
 )
 
+
+def inspect_flood(odkgeom, properties_dict):
+    """
+    Inspect ODK object based on flood submersion
+    """
+    intersaction_list = RendamanBanjir.objects.filter(polygon__intersects=odkgeom)
+    if intersaction_list:
+        info_statement = "<p>Berdasarkan data rendaman banjir Baleendah, lokasi ini bersinggungan dengan wilayah terdampak banjir</p>"
+    else:
+        info_statement = "<p>Lokasi ini diluar data rendaman banjir</p>"
+    return info_statement
+
+
 def inspect_earthquake_intensity(odkgeom, properties_dict):
     """
     Inspect ODK object based on earthquake intensity data
     """
     intersaction_list = IntensitasGempa.objects.filter(polygon__intersects=odkgeom)
     if intersaction_list:
-        stmpart1 = "Berdasarkan data intensitas gempa, lokasi,"
-        stmpart2 = "ini berada pada wilayah dengan magnitudo"
+        mi_value = intersaction_list[0].value
+        if mi_value <= 2:
+            mmi = 'I'
+        elif mi_value > 2 and mi_value <= 3:
+            mmi = 'II'
+        elif mi_value > 3 and mi_value <= 3.5:
+            mmi = 'III'
+        elif mi_value > 3.5 and mi_value <= 4:
+            mmi = 'IV'
+        elif mi_value > 4 and mi_value <= 4.5:
+            mmi = 'V'
+        elif mi_value > 4.5 and mi_value <= 5:
+            mmi = 'VI'
+        elif mi_value > 5 and mi_value <= 5.5:
+            mmi = 'VII'
+        elif mi_value > 5.5 and mi_value <= 6:
+            mmi = 'VIII'
+        elif mi_value > 6 and mi_value <= 6.5:
+            mmi = 'IX'
+        elif mi_value > 6.5 and mi_value <= 7:
+            mmi = 'X'
+        elif mi_value > 7 and mi_value <= 7.5:
+            mmi = 'XI'
+        elif mi_value > 7.5:
+            mmi = 'XII'
+        else:
+            mmi = 'UNKNOWN'
+        stmpart = "Berdasarkan data intensitas gempa, lokasi ini berada pada wilayah dengan magnitudo"
         unit = "SR"
         stmpart3 = "atau skala"
-        mmi = "<a href='https://www.bmkg.go.id/gempabumi/skala-mmi.bmkg' target='_blank'>I</a>"
-        info_statement = "%s <strong>%s</strong> %s <strong>%s %s</strong>, %s %s" % (
-            stmpart1,
-            next(iter(properties_dict.values())),
-            stmpart2,
+        bmkg_mmi = "<a href='https://www.bmkg.go.id/gempabumi/skala-mmi.bmkg' target='_blank'>%s</a> MMI" % mmi
+        info_statement = "<p>%s <strong>%s %s</strong>, %s %s</p>" % (
+            stmpart,
             intersaction_list[0].value,
             unit,
             stmpart3,
-            mmi
+            bmkg_mmi
         )
     else:
         info_statement = "<p>Lokasi ini diluar data intensitas gempa</p>"
     return info_statement
+
+
+def distance_to_lembangfault(odkgeom, properties_dict, point):
+    """
+    Measure distance between ODK object to lembang fault
+    """
+    cursor = connection.cursor()
+    odkgeom = odkgeom[0] if point else odkgeom
+    cursor.execute("SELECT ST_Distance(ST_Transform('%s'::geometry, 3857), ST_Transform((select polyline from dashboard_sesarlembang)::geometry, 3857));" % odkgeom)
+    shortest_distance = cursor.fetchall()
+    statement = "<p>Berdasarkan data sesar lembang, jarak lokasi ini ke sesar lembang adalah <b>%s Meter</b></p>" % (
+        round(shortest_distance[0][0], 3)
+    )
+    return statement
 
 
 def read_odk_image(odk_con, properties_dict, record, colnames):
@@ -142,6 +194,26 @@ def odk_to_json(odk_con):
                     except IndexError as error:
                         pass
                 read_odk_image(odk_con, properties_dict, record, colnames)
+                # Inspection Geo-Intellegent
+                odkgeom = LineString((tuple(coordinates_list)))
+                earthquake_intensity_result = inspect_earthquake_intensity(
+                    odkgeom,
+                    properties_dict
+                )
+                inspect_flood_result = inspect_flood(
+                    odkgeom,
+                    properties_dict
+                )
+                distance_to_fault_result = distance_to_lembangfault(
+                    odkgeom,
+                    properties_dict,
+                    False
+                )
+                properties_dict.update({
+                    "EARTHQUAKE_INTENSITY_RESULT": earthquake_intensity_result,
+                    "INSPECT_FLOOD_RESULT": inspect_flood_result,
+                    "DISTANCE_TO_FAULT_RESULT": distance_to_fault_result
+                })
                 all_features.append(Feature(
                     geometry=MultiLineString([coordinates_list]),
                     properties=properties_dict
@@ -167,13 +239,24 @@ def odk_to_json(odk_con):
                 # Inspection Geo-Intellegent
                 coordinates_list_closed = coordinates_list
                 coordinates_list_closed.append(coordinates_list[0])
-                odkgeom = Polygon((tuple(coordinates_list)))
+                odkgeom = Polygon((tuple(coordinates_list_closed)))
                 earthquake_intensity_result = inspect_earthquake_intensity(
                     odkgeom,
                     properties_dict
                 )
+                inspect_flood_result = inspect_flood(
+                    odkgeom,
+                    properties_dict
+                )
+                distance_to_fault_result = distance_to_lembangfault(
+                    odkgeom,
+                    properties_dict,
+                    False
+                )
                 properties_dict.update({
-                    "EARTHQUAKE_INTENSITY_RESULT": earthquake_intensity_result
+                    "EARTHQUAKE_INTENSITY_RESULT": earthquake_intensity_result,
+                    "INSPECT_FLOOD_RESULT": inspect_flood_result,
+                    "DISTANCE_TO_FAULT_RESULT": distance_to_fault_result
                 })
                 # Store to feature
                 all_features.append(Feature(
@@ -202,8 +285,19 @@ def odk_to_json(odk_con):
                     odkgeom,
                     properties_dict
                 )
+                inspect_flood_result = inspect_flood(
+                    odkgeom,
+                    properties_dict
+                )
+                distance_to_fault_result = distance_to_lembangfault(
+                    odkgeom,
+                    properties_dict,
+                    True
+                )
                 properties_dict.update({
-                    "EARTHQUAKE_INTENSITY_RESULT": earthquake_intensity_result
+                    "EARTHQUAKE_INTENSITY_RESULT": earthquake_intensity_result,
+                    "INSPECT_FLOOD_RESULT": inspect_flood_result,
+                    "DISTANCE_TO_FAULT_RESULT": distance_to_fault_result
                 })
                 # Store to feature
                 all_features.append(Feature(
