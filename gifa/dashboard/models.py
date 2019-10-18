@@ -4,6 +4,66 @@ from django.utils.translation import gettext_lazy as _
 from odkcollect.models import ODKConnector
 
 
+class SesarLembang(models.Model):
+    id = models.BigIntegerField(
+        primary_key=True,
+        verbose_name=_('ID')
+    )
+    polyline = models.MultiLineStringField(
+        null=True,
+        blank=True,
+        verbose_name=_('Polyline')
+    )
+
+
+class IntensitasGempa(models.Model):
+    id = models.BigIntegerField(
+        primary_key=True,
+        verbose_name=_('ID')
+    )
+    polygon = models.MultiPolygonField(
+        null=True,
+        blank=True,
+        verbose_name=_('Polygon')
+    )
+    luas = models.DecimalField(
+        null=True,
+        blank=True,
+        max_digits=25,
+        decimal_places=4,
+        help_text=_('dalam meter persegi'),
+        verbose_name=_('Luas')
+    )
+    value = models.DecimalField(
+        null=True,
+        blank=True,
+        max_digits=25,
+        decimal_places=4,
+        help_text=_('dalam SR'),
+        verbose_name=_('value')
+    )
+
+
+class RendamanBanjir(models.Model):
+    id = models.BigIntegerField(
+        primary_key=True,
+        verbose_name=_('ID')
+    )
+    polygon = models.MultiPolygonField(
+        null=True,
+        blank=True,
+        verbose_name=_('Polygon')
+    )
+    luas = models.DecimalField(
+        null=True,
+        blank=True,
+        max_digits=25,
+        decimal_places=4,
+        help_text=_('dalam meter persegi'),
+        verbose_name=_('Luas')
+    )
+
+
 class Desa(models.Model):
     id = models.BigIntegerField(
         primary_key=True,
@@ -21,7 +81,7 @@ class Desa(models.Model):
     luas = models.DecimalField(
         null=True,
         blank=True,
-        max_digits=12,
+        max_digits=25,
         decimal_places=4,
         help_text=_('dalam kilometer persegi'),
         verbose_name=_('Luas')

@@ -333,10 +333,12 @@ var odkLines_{{ odk_polyline.con_id }} = L.geoJson(null, {
       });
       var content = "<table class='table table-striped table-bordered table-condensed'>" +
           tableContent + "<table>";
+      var geointel_content = feature.properties.EARTHQUAKE_INTENSITY_RESULT
       layer.on({
         click: function (e) {
           $("#feature-title").html('{{ odk_polyline.con_nama }}');
-          $("#feature-info").html(content);
+          $("#geointel-info").html(geointel_content);
+          $("#attribute-info").html(content);
           $("#featureModal").modal("show");
 
         }
@@ -386,10 +388,12 @@ var odkPolygon_{{ odk_polygon.con_id }} = L.geoJson(null, {
       });
       var content = "<table class='table table-striped table-bordered table-condensed'>" +
           tableContent + "<table>";
+      var geointel_content = feature.properties.EARTHQUAKE_INTENSITY_RESULT
       layer.on({
         click: function (e) {
           $("#feature-title").html('{{ odk_polygon.con_nama }}');
-          $("#feature-info").html(content);
+          $("#geointel-info").html(geointel_content);
+          $("#attribute-info").html(content);
           $("#featureModal").modal("show");
 
         }
@@ -451,10 +455,12 @@ var odkPoint_{{ odk_point.con_id }} = L.geoJson(null, {
       });
       var content = "<table class='table table-striped table-bordered table-condensed'>" +
           tableContent + "<table>";
+      var geointel_content = feature.properties.EARTHQUAKE_INTENSITY_RESULT
       layer.on({
         click: function (e) {
           $("#feature-title").html('{{ odk_point.con_nama }}');
-          $("#feature-info").html(content);
+          $("#geointel-info").html(geointel_content);
+          $("#attribute-info").html(content);
           $("#featureModal").modal("show");
           highlight.clearLayers().addLayer(L.circleMarker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], highlightStyle));
         }

@@ -2,8 +2,46 @@ import psycopg2
 import psycopg2.extras
 
 from django.conf import settings
+from django.contrib.gis.geos import Point, Polygon
 
-from geojson import MultiLineString, Polygon, Point, Feature, FeatureCollection
+from geojson import (
+    MultiLineString,
+    Polygon as PolygonJson,
+    Point as PointJson,
+    Feature,
+    FeatureCollection
+)
+
+from dashboard.models import (
+    IntensitasGempa,
+    RendamanBanjir,
+    SesarLembang
+)
+
+def inspect_earthquake_intensity(odkgeom, properties_dict):
+    """
+    Inspect ODK object based on earthquake intensity data
+    """
+    intersaction_list = IntensitasGempa.objects.filter(polygon__intersects=odkgeom)
+    if intersaction_list:
+        stmpart1 = "Berdasarkan data intensitas gempa, lokasi,"
+        stmpart2 = "ini berada pada wilayah dengan magnitudo"
+        unit = "SR"
+        stmpart3 = "atau skala"
+        mmi = "<a href='https://www.bmkg.go.id/gempabumi/skala-mmi.bmkg' target='_blank'>I</a>"
+        info_statement = "%s <strong>%s</strong> %s <strong>%s %s</strong>, %s %s" % (
+            stmpart1,
+            next(iter(properties_dict.values())),
+            stmpart2,
+            intersaction_list[0].value,
+            unit,
+            stmpart3,
+            mmi
+        )
+    else:
+        info_statement = "<p>Lokasi ini diluar data intensitas gempa</p>"
+    return info_statement
+
 
 def read_odk_image(odk_con, properties_dict, record, colnames):
     """
@@ -126,8 +164,20 @@ def odk_to_json(odk_con):
                     except IndexError as error:
                         pass
                 read_odk_image(odk_con, properties_dict, record, colnames)
+                # Inspection Geo-Intellegent
+                coordinates_list_closed = coordinates_list
+                coordinates_list_closed.append(coordinates_list[0])
+                odkgeom = Polygon((tuple(coordinates_list)))
+                earthquake_intensity_result = inspect_earthquake_intensity(
+                    odkgeom,
+                    properties_dict
+                )
+                properties_dict.update({
+                    "EARTHQUAKE_INTENSITY_RESULT": earthquake_intensity_result
+                })
+                # Store to feature
                 all_features.append(Feature(
-                    geometry=Polygon([coordinates_list]),
+                    geometry=PolygonJson([coordinates_list]),
                     properties=properties_dict
                 ))
             elif odk_con.geometry_type == 'point':
@@ -146,10 +196,21 @@ def odk_to_json(odk_con):
                     'ALTITUDE': float(record[colnames.index(altitude_column)]),
                     'ACCURACY': float(record[colnames.index(accuracy_column)])
                 })
+                # Inspection Geo-Intellegent
+                odkgeom = Point((x_coord, y_coord)),
+                earthquake_intensity_result = inspect_earthquake_intensity(
+                    odkgeom,
+                    properties_dict
+                )
+                properties_dict.update({
+                    "EARTHQUAKE_INTENSITY_RESULT": earthquake_intensity_result
+                })
+                # Store to feature
                 all_features.append(Feature(
-                    geometry=Point((x_coord, y_coord)),
+                    geometry=PointJson((x_coord, y_coord)),
                     properties=properties_dict
                 ))
+
         feature_collection = FeatureCollection(all_features)
         return feature_collection
     except (Exception, psycopg2.Error) as error:
