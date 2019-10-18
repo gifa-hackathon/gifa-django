@@ -11,6 +11,7 @@ from django.db.models import Q
 
 from dashboard.models import Desa, Category
 from odkcollect.models import ODKConnector
+from mapservice.models import MapServices, LayerServices
 
 def gifa_dashboard(request):
     """
@@ -46,6 +47,11 @@ def gifa_dashboard(request):
     # Marker icon resource from Map Box
     marker_url = "https://api.tiles.mapbox.com/v3/marker/pin-s-circle-stroked"
 
+    # WMS Services
+    all_map_services = MapServices.objects.filter(
+        publish=True
+    )
+
     # BIG Basemap Services
     urlPetaBIG = "https://portal.ina-sdi.or.id/arcgis/rest/services/IGD/RupabumiIndonesia/MapServer"
     urlBaruPetaBIG = "http://palapa.big.go.id:8080/geoserver/gwc/service/tms/1.0.0/basemap_rbi:basemap@EPSG:3857@png/{z}/{x}/{-y}.png"
@@ -61,7 +67,8 @@ def gifa_dashboard(request):
         "all_category": all_category,
         "marker_url": marker_url,
         "urlPetaBIG": urlPetaBIG,
-        "urlBaruPetaBIG": urlBaruPetaBIG
+        "urlBaruPetaBIG": urlBaruPetaBIG,
+        "all_map_services": all_map_services
     }
     return render(request, 'dashboard/index.html', context)
 

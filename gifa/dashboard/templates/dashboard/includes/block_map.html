@@ -41,6 +41,26 @@
         color: #333;
         box-shadow: 0 3px 14px rgba(0,0,0,0.4);
     }
+
+    #map .leaflet-control-layers .leaflet-control-layers-group-name{
+      padding-left:20px;
+      display:block;
+    }
+    #map .leaflet-control-layers label{
+      padding-left:10px;
+      padding-right:10px;
+      display:none;
+    }
+    #map .leaflet-control-layers label.trigger{
+      position:absolute;
+      left:0;
+      padding:0;
+      margin:0;
+      display:block;
+      cursor:pointer;
+    }
+    #map .leaflet-control-layers .trigger-radio{display:none;}
+    #map .leaflet-control-layers .trigger-radio.checked ~ label{display:block;}
 </style>
 {% endblock %}
 

@@ -256,27 +256,18 @@ var floodriskLayer = L.esri.imageMapLayer({
 });
 
 /* WMS Layers */
-var skyWmsLayer = L.wms.source(
-    "http://gifa.wgs84on.site:8080/geoserver/baleendah/wms",
+{% for map_service in all_map_services %}
+var wmsLayer_{{ map_service.service_id  }} = L.wms.source(
+    "{{ map_service.service_url }}",
     {
         "format": "image/png",
         "transparent": "true",
-        "attribution": "<a href='#'>SKY Volunteer</a>",
+        "attribution": "{{ map_service.service_attribution }}",
         "info_format": "text/html",
         "tiled": true
     }
 );
-
-var dummy = L.wms.source(
-    "http://172.104.61.157:8080/geoserver/geonode/wms",
-    {
-        "format": "image/png",
-        "transparent": "true",
-        "attribution": "<a href='#'>SKY Volunteer</a>",
-        "info_format": "text/html",
-        "tiled": true
-    }
-);
+{% endfor %}
 
 /* Overlay Layers */
 var highlight = L.geoJson(null);
@@ -329,10 +320,12 @@ var odkLines_{{ odk_polyline.con_id }} = L.geoJson(null, {
     if (feature.properties) {
       var tableContent ="";
       $.each(feature.properties, function(key,value) {
-          tableContent = tableContent + "<tr><th>" + key + "</th><td>" + value + "</td></tr>";
+          if(key !== "EARTHQUAKE_INTENSITY_RESULT" && key !== "DISTANCE_TO_FAULT_RESULT" && key !== "INSPECT_FLOOD_RESULT"){
+              tableContent = tableContent + "<tr><th>" + key + "</th><td>" + value + "</td></tr>";
+          }
       });
       var content = "<table class='table table-striped table-bordered table-condensed'>" +
-          tableContent + "<table>";
+          tableContent + "</table>";
       var geointel_content = feature.properties.EARTHQUAKE_INTENSITY_RESULT;
       geointel_content = geointel_content + feature.properties.DISTANCE_TO_FAULT_RESULT;
       geointel_content = geointel_content + feature.properties.INSPECT_FLOOD_RESULT;
@@ -386,7 +379,9 @@ var odkPolygon_{{ odk_polygon.con_id }} = L.geoJson(null, {
     if (feature.properties) {
       var tableContent ="";
       $.each(feature.properties, function(key,value) {
-          tableContent = tableContent + "<tr><th>" + key + "</th><td>" + value + "</td></tr>";
+          if(key !== "EARTHQUAKE_INTENSITY_RESULT" && key !== "DISTANCE_TO_FAULT_RESULT" && key !== "INSPECT_FLOOD_RESULT"){
+              tableContent = tableContent + "<tr><th>" + key + "</th><td>" + value + "</td></tr>";
+          }
       });
       var content = "<table class='table table-striped table-bordered table-condensed'>" +
           tableContent + "<table>";
@@ -455,7 +450,9 @@ var odkPoint_{{ odk_point.con_id }} = L.geoJson(null, {
     if (feature.properties) {
       var tableContent ="";
       $.each(feature.properties, function(key,value) {
-          tableContent = tableContent + "<tr><th>" + key + "</th><td>" + value + "</td></tr>";
+          if(key !== "EARTHQUAKE_INTENSITY_RESULT" && key !== "DISTANCE_TO_FAULT_RESULT" && key !== "INSPECT_FLOOD_RESULT"){
+              tableContent = tableContent + "<tr><th>" + key + "</th><td>" + value + "</td></tr>";
+          }
       });
       var content = "<table class='table table-striped table-bordered table-condensed'>" +
           tableContent + "<table>";
@@ -491,11 +488,11 @@ map = L.map("map", {
 });
 
 // Setting the layer boundary over Baleendah
-const bounds = L.latLngBounds([[-6.8, 107.24], [-7.33, 108.20]]);
-  map.setMaxBounds(bounds);
-  map.on('drag', function() {
-    map.panInsideBounds(bounds, {animate: false});
-});
+// const bounds = L.latLngBounds([[-6.8, 107.24], [-7.33, 108.20]]);
+//   map.setMaxBounds(bounds);
+//   map.on('drag', function() {
+//     map.panInsideBounds(bounds, {animate: false});
+// });
 
 /* Layer control listeners that allow for a single markerClusters layer */
 map.on("overlayadd", function(e) {
@@ -596,17 +593,27 @@ iconLayersControl.addTo(map);
 osmMapnik.addTo(map);
 iconLayersControl.setActiveLayer(osmMapnik);
 
+var measureControl = L.control.measure({
+    position: 'topleft',
+    primaryLengthUnit: 'meters',
+    secondaryLengthUnit: 'kilometers',
+    activeColor: '#506eb5',
+    completedColor: '#8150b5',
+    popupOptions: { className: 'leaflet-measure-resultpopup', autoPanPadding: [10, 10] }
+});
+measureControl.addTo(map);
+
 var groupedOverlays = {
   "Batas Administrasi": {
     "Batas Desa": desaBndy,
   },
-  "SKY Volunteer (Baleendah)": {
-    "DEM Banjir (2018)": skyWmsLayer.getLayer("baleendah:DEM_BANJIR_BALEENDAH"),
-    "TEST2": dummy.getLayer("geonode:hillshade_2"),
-    // "Foto Udara Banjir (2018)": skyWmsLayer.getLayer("baleendah:DEM_BANJIR_BALEENDAH"),
-    // "DEM (2019)": skyWmsLayer.getLayer("baleendah:DEM_BANJIR_BALEENDAH"),
-    // "Foto Udara (2019)": skyWmsLayer.getLayer("baleendah:DEM_BANJIR_BALEENDAH"),
+  {% for map_service in all_map_services %}
+  "{{ map_service.service_name }}": {
+      {% for layer_service in map_service.layerservices.all %}
+      "{{ layer_service.layer_display_name }}": wmsLayer_{{ map_service.service_id  }}.getLayer("{{ layer_service.layer_name }}"),
+      {% endfor %}
   },
+  {% endfor %}
   {% for category in all_category %}
   "{{ category.category_name }}": {
     {% for con in category.odk_connections.all %}
@@ -732,6 +739,35 @@ $(document).one("ajaxStop", function () {
   });
   $(".twitter-typeahead").css("position", "static");
   $(".twitter-typeahead").css("display", "block");
+
+  $('.leaflet-control-layers-group-name').each(function(index){
+      var self = $(this),
+          trigger = $('<label>', {
+          html: '<i id="layerDD-' + index + '" class="fa fa-chevron-right"></i>',
+          class:'trigger',
+          for: 'dropdown-trigger-' + index
+        }).insertBefore(self),
+        radio = $('<button>', {
+          type : 'button',
+          class: 'trigger-radio checked',
+          name : 'dropdown-control',
+          id: 'dropdown-trigger-' + index
+        }).insertBefore(trigger);
+  });
+  $(".trigger-radio").click(function(){
+    if ($(this).hasClass("checked")) {
+      var idx = $(this).attr('id').split("-")[2];
+      $("#layerDD-"+idx).removeClass("fa fa-chevron-right");
+      $("#layerDD-"+idx).addClass("fa fa-chevron-down");
+      $('#'+$(this).attr('id')).removeClass('checked');
+    } else {
+      var idx = $(this).attr('id').split("-")[2];
+      $("#layerDD-"+idx).removeClass("fa fa-chevron-down");
+      $("#layerDD-"+idx).addClass("fa fa-chevron-right");
+      $('#'+$(this).attr('id')).addClass('checked');
+    }
+  });
+
 });
 
 // Leaflet patch to make layer control scrollable on touch browsers

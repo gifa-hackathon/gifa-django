@@ -44,47 +44,26 @@ class ODKConnector(models.Model):
         max_length=255,
         verbose_name=_('ODK Table Name')
     )
-    geotrace_column = models.CharField(
+    group_column = models.CharField(
         max_length=255,
         blank=True,
         null=True,
-        help_text=_('Kolom Geometri untuk Garis'),
-        verbose_name=_('Geotrace Column')
+        help_text=_('Kolom Group'),
+        verbose_name=_('Group Column')
     )
-    geotrace_image = models.CharField(
+    geometry_column = models.CharField(
         max_length=255,
         blank=True,
         null=True,
-        help_text=_('Kolom untuk gambar, apabila lebih dari satu, gunakan (;) sebagai pemisah'),
-        verbose_name=_('Geotrace Image Column')
+        help_text=_('Kolom Geometri'),
+        verbose_name=_('Geometry Column')
     )
-    geoshape_column = models.CharField(
+    geometry_image = models.CharField(
         max_length=255,
         blank=True,
         null=True,
-        help_text=_('Kolom Geometri untuk Poligon'),
-        verbose_name=_('Geoshape Column')
-    )
-    geoshape_image = models.CharField(
-        max_length=255,
-        blank=True,
-        null=True,
-        help_text=_('Kolom untuk gambar, apabila lebih dari satu, gunakan (;) sebagai pemisah'),
-        verbose_name=_('Geoshape Image Column')
-    )
-    geopoint_column = models.CharField(
-        max_length=255,
-        blank=True,
-        null=True,
-        help_text=_('Kolom Geometri untuk titik'),
-        verbose_name=_('Geopoint Column')
-    )
-    geopoint_image = models.CharField(
-        max_length=255,
-        blank=True,
-        null=True,
-        help_text=_('Kolom untuk gambar, apabila lebih dari satu, gunakan (;) sebagai pemisah'),
-        verbose_name=_('Geopoint Image Column')
+        help_text=_('Kolom untuk gambar, apabila lebih dari satu, gunakan ( ; ) sebagai pemisah'),
+        verbose_name=_('Image Column')
     )
     object_color = ColorField(
         default='#213693',
