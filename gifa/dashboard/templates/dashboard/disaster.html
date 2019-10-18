@@ -1,0 +1,16 @@
+{% extends "dashboard/base_disaster.html" %}
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'viz/css/disaster.css' %}">
+
+{% block content %}
+
+{% load render_table from django_tables2 %}
+
+<div id="container-datatable" style="margin-top: 25px;">
+	<div class="col-md-12">
+		{% render_table table %}
+	</div>
+</div>
+
+{% endblock %}

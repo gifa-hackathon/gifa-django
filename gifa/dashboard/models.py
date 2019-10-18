@@ -2,6 +2,7 @@ from django.contrib.gis.db import models
 from django.utils.translation import gettext_lazy as _
 
 from odkcollect.models import ODKConnector
+import django_tables2 as tables
 
 
 class SesarLembang(models.Model):
@@ -119,3 +120,21 @@ class Category(models.Model):
 
     def __unicode__(self):
         return self.category_name
+
+class Person(models.Model):
+    id = models.BigIntegerField(
+        primary_key=True,
+        verbose_name=_('ID')
+    )
+    first_name = models.CharField(max_length=200)
+    last_name = models.CharField(max_length=200)
+    birth_date = models.DateField()
+    phone = models.IntegerField()
+
+class Refugee(tables.Table):
+    class Meta:
+        model = Person
+        attrs = {'class': 'datatable col-md-12'} # add dataTable Class here
+        fields = ('first_name', 'last_name', 'birth_date', 'phone')
+        order_by = ('first_name', )
+        template_name = "django_tables2/bootstrap-responsive.html"

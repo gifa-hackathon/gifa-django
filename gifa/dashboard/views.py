@@ -9,7 +9,7 @@ from django.core.serializers import serialize
 from django.http import JsonResponse
 from django.db.models import Q
 
-from dashboard.models import Desa, Category
+from dashboard.models import Desa, Category, Refugee, Person
 from odkcollect.models import ODKConnector
 
 def gifa_dashboard(request):
@@ -65,6 +65,42 @@ def gifa_dashboard(request):
     }
     return render(request, 'dashboard/index.html', context)
 
+def panel_disaster(request):
 
-def panelVisualisation(request):
-    return render(request, 'dashboard/panel.html')
+    # static dataset
+    data = [
+        {
+            "first_name": "Cecep",
+            "last_name": "Adi",
+            "birth_date": "1970-04-03",
+            "phone": "082213541291"
+        },
+        {
+            "first_name": "Roby",
+            "last_name": "Fauzi",
+            "birth_date": "1986-06-23",
+            "phone": "082213541291"
+        },
+        {
+            "first_name": "Irsyad",
+            "last_name": "Kharisma",
+            "birth_date": "1987-01-01",
+            "phone": "082213541331"
+        },
+        {
+
+            "first_name": "Agung",
+            "last_name": "Pratikno",
+            "birth_date": "1966-04-03",
+            "phone": "082213541291"
+        },
+    ]
+
+    table = Refugee(data)
+    # table = Refugee(Person.objects.all())
+    return render(request, 'dashboard/disaster.html', {
+        "table": table
+        })
+
+def panel_visualization(request):
+    return render(request, 'dashboard/dataviz.html')
