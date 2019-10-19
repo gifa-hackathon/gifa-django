@@ -7,7 +7,7 @@ const data =
             "phone": "082213541291",
             "age": 32,
             "blood_type": "B",
-            "gender": "M",
+            "gender": "Male",
             "disability_status": "-",
             "occupation": "farmer"
 
@@ -18,7 +18,7 @@ const data =
             "phone": "082213541291",
             "age": 19,
             "blood_type": "B",
-            "gender": "M",
+            "gender": "Male",
             "disability_status": "-",
             "occupation": "student"
         },
@@ -28,7 +28,7 @@ const data =
             "phone": "082213541334",
             "age": 32,
             "blood_type": "B",
-            "gender": "M",
+            "gender": "Male",
             "disability_status": "-",
             "occupation": "youtuber"
         },
@@ -39,7 +39,7 @@ const data =
             "phone": "082213541288",
             "age": 22,
             "blood_type": "B",
-            "gender": "M",
+            "gender": "Male",
             "disability_status": "-",
             "occupation": ""
         },
@@ -50,18 +50,18 @@ const data =
             "phone": "082213541555",
             "age": 27,
             "blood_type": "B",
-            "gender": "M",
+            "gender": "Male",
             "disability_status": "-",
             "occupation": "PNS"
         },
         {
 
-            "first_name": "Bimo",
-            "last_name": "Pratikno",
+            "first_name": "Indah",
+            "last_name": "A",
             "phone": "082213541288",
             "age": 37,
             "blood_type": "B",
-            "gender": "M",
+            "gender": "Female",
             "disability_status": "-",
             "occupation": "-"
         },
@@ -72,18 +72,18 @@ const data =
             "phone": "082213541288",
             "age": 20,
             "blood_type": "AB",
-            "gender": "M",
+            "gender": "Male",
             "disability_status": "-",
             "occupation": "student"
         },
         {
 
-            "first_name": "Hendra",
-            "last_name": "Yahya",
+            "first_name": "Wulan",
+            "last_name": "Guritno",
             "phone": "082213541329",
             "age": 17,
             "blood_type": "A",
-            "gender": "M",
+            "gender": "Female",
             "disability_status": "-",
             "occupation": "student"
         },
@@ -114,7 +114,18 @@ $(document).ready(function () {
     		{data: "gender"},
     		{data: "disability_status"},
     		{data: "occupation"}
-    	]
+    	],
+
+        // function to change background cell color based on specific value
+        createdRow: function(row, data, index) {
+            if(data["gender"] == "Female") {
+                $('td', row).eq(5).css('background-color', '#fd6bff');
+                $('td', row).eq(5).addClass('gender');
+            } else if(data["gender"] == "Male") {
+                $('td', row).eq(5).css('background-color', '#70e5ff');
+                $('td', row).eq(5).addClass('gender');
+            }
+        }
     });
 });
 

@@ -18,3 +18,15 @@ text {
 .dt-button:hover {
 	background-color: #0c4004;
 }
+
+.donation_style {
+	text-align: center;
+	font-family: sans-serif;
+	font-weight: bold;
+}
+
+.gender {
+	text-align: center;
+	font-family: sans-serif;
+	font-weight: bold;
+}
