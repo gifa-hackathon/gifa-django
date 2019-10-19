@@ -72,14 +72,16 @@ var data = [{
                             .select('g')
                             .selectAll('.tick')
                             .data(chart.xScale().ticks())
+                            // Class to make it responsive.
+                            .classed("svg-content-responsive", true)
+                            // Container class to make it responsive.
+                            .classed("svg-container", true) 
                             .append('line')
                             .attr('class', 'x-axis-tick-mark')
                             .attr('x2', 0)
                             .attr('y1', tickY2 + 4)
                             .attr('y2', tickY2)
                             .attr('stroke-width', 1)
-                            .attr("width", 600)
-                            .attr("height", 400)
                     ;
             // set up the tooltip to display full dates
             var tsFormat = d3.time.format('%b %-d, %Y %I:%M%p');

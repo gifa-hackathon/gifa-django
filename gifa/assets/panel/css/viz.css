@@ -5,31 +5,42 @@ text {
     float: left;
     margin: 10px 0 10px 10px;
 }
-.svg-container {
-    display: block;
-    position: absolute;
-    top: 70px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-}
+
 html, body, svg {
     margin-top: 35px;
     margin-bottom: 30px;
     padding: 0px;
 }
 
+.svg-container {
+  display: inline-block;
+  width: 100%;
+  padding-bottom: 100%; /* aspect ratio */
+  vertical-align: top;
+  overflow: hidden;
+}
+
+.svg-content-responsive {
+  display: inline-block;
+  position: absolute;
+  left: 0;
+}
+
 #dataviz-1 {
-    width: 100%;
+    margin-top: 35px;
+    height: 300px;
 }
 
-#test1 {
-    width: 100%
-    height: 40%;
+#test1, #test2 {
+    height: 320px;
 }
 
-.svg.nvd3-svg {
-    height: 40% !important;
+#loss_damage_chart svg {
+    padding-top: 70px;
+    position: absolute;
+    left: 30px;
+    width: 97%;
+    height: 420px;
 }
 
 .nvd3 line.nv-guideline { /* Hide the guideline */
