@@ -294,7 +294,7 @@ var desaBndy = L.geoJson({{ desa_bndy_json|safe }}, {
       fill: true,
       dashArray: '5, 7',
       lineCap: 'square',
-      weight: 4,
+      weight: 3,
       opacity: 1,
       clickable: false
     };
@@ -610,6 +610,40 @@ var measureControl = L.control.measure({
     popupOptions: { className: 'leaflet-measure-resultpopup', autoPanPadding: [10, 10] }
 });
 measureControl.addTo(map);
+
+// Route Controller
+var menuControlActive = true;
+var routingControler = L.Routing.control({
+    waypoints: [
+        L.latLng(-6.991983,107.626592),
+        L.latLng(-6.991354,107.625039)
+	],
+    routeWhileDragging: true,
+    position: 'topleft',
+});
+
+var routeControl = L.Control.extend({
+  options: {
+    position: 'topleft'
+  },
+  onAdd: function (map) {
+      var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-route');
+      container.style.backgroundColor = '#a3d2d382';
+      container.style.width = '30px';
+      container.style.height = '30px';
+      container.onclick = function(){
+          if (menuControlActive === true) {
+              routingControler.addTo(map);
+              menuControlActive = false
+          } else {
+              map.removeControl(routingControler);
+              menuControlActive = true
+          }
+      }
+      return container;
+  },
+})
+map.addControl(new routeControl());
 
 var groupedOverlays = {
   "Batas Administrasi": {
