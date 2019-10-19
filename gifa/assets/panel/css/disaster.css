@@ -6,3 +6,15 @@ text {
 	margin-top: 30px;
 	margin-left: 10px;
 }
+
+.dt-button {
+	background-color: #41cf2b;
+	border: none;
+	color: white;
+	cursor: pointer;
+	padding: 8px;
+}
+
+.dt-button:hover {
+	background-color: #0c4004;
+}

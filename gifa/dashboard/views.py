@@ -75,8 +75,8 @@ def gifa_dashboard(request):
 def panel_affected_family(request):
     return render(request, 'dashboard/affected_family.html')
 
-def panel_shelter(request):
-    return render(request, 'dashboard/shelter.html')
+def panel_humanitarian_aid(request):
+    return render(request, 'dashboard/humanitarian_aid.html')
 
 def panel_visualization(request):
     return render(request, 'dashboard/dataviz.html')

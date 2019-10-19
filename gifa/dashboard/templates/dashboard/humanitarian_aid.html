@@ -1,0 +1,39 @@
+{% extends "dashboard/base_disaster.html" %}
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'panel/css/disaster.css' %}">
+
+{% block content %}
+
+<div id="container-datatable" style="margin-top: 25px;">
+	<div class="col-md-12">
+		{% block scripts %}
+		<script src="{% static 'panel/js/humanitarian_aid.js' %}"></script>
+		{% endblock %}
+		<table id="humanitarian_aid" class="hover">
+		    <thead>
+		        <tr>
+		            <th rowspan="2">Householder</th>
+		            <th colspan="2">Non-food Items</th>
+		            <th colspan="3">Water Supply</th>
+		            <th colspan="4">Food Security and Nutrition</th>
+		        </tr>
+		        <tr>
+		        	<th>Clothing</th>
+		        	<th>Blankets</th>
+		        	<th>Sleeping Mats</th>
+		        	<th>Bathing Soap</th>
+		        	<th>Sanitary for Menstruation</th>
+		        	<th>Diapers</th>
+		        	<th>Cooking Pot</th>
+		        	<th>Dished Plate</th>
+		        	<th>Metal Spoon</th>
+		        	<th>Water</th>
+		        	<th>Food</th>
+		        </tr>
+		    </thead>
+		</table>
+	</div>
+</div>
+
+{% endblock %}
