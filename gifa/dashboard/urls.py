@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^dataviz/$', views.panel_visualization, name = 'panel_visualization'),
     url(r'^vulnerability/$', views.panel_vulnerability, name = 'panel_vulnerability'),
     url(r'^exposure/$', views.panel_exposure, name = 'panel_exposure'),
+    url(r'^bangunanosm/$', views.panel_bangunanosm, name = 'panel_bangunanosm'),
 ]

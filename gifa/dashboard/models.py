@@ -23,6 +23,18 @@ class BangunanOSM(models.Model):
         blank=True,
         verbose_name=_('Polygon')
     )
+    exposure_index = models.IntegerField(
+        null=True,
+        blank=True,
+        default=0,
+        verbose_name=_('Exposure Index')
+    )
+    flood_depth = models.IntegerField(
+        null=True,
+        blank=True,
+        default=0,
+        verbose_name=_('Flood Depth')
+    )
 
 
 class InfrastrukturJalanOSM(models.Model):
