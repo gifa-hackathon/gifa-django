@@ -14,6 +14,12 @@ class MapServices(models.Model):
         max_length=255,
         verbose_name=_('Service Name')
     )
+    description = models.CharField(
+        null=True,
+        blank=True,
+        max_length=255,
+        verbose_name=_('Description')
+    )
     service_attribution = models.CharField(
         max_length=255,
         verbose_name=_('Service Attribution')

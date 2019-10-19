@@ -40,7 +40,7 @@
         <a href="#" class="navbar-icon pull-right visible-xs" id="nav-btn"><i class="fa fa-bars fa-lg white"></i></a>
         <a href="#" class="navbar-icon pull-right visible-xs" id="sidebar-toggle-btn"><i class="fa fa-search fa-lg white"></i></a>
       </div>
-        <a href='/dashboard' onclick="document.location.href=/">
+        <a href="{% url 'home' %}" %}">
           <img id="gifaIcon" src="{% static 'icon/gifa.png' %}">
         </a>
     </div>
@@ -51,28 +51,37 @@
             <span id="searchicon" class="fa fa-search form-control-feedback"></span>
         </div>
       </form>
+      <ul id="navbarMenu" class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a id="toolDrop" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe white"></i>&nbsp;&nbsp;Tools <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="full-extent-btn"><i class="fa fa-arrows-alt"></i>&nbsp;&nbsp;Zoom To Full Extent</a></li>
+              <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="legend-btn"><i class="fa fa-picture-o"></i>&nbsp;&nbsp;Show Legend</a></li>
+              <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="pjt2awlr-btn"><img src="http://pjt2awlr.com/favicon.ico">&nbsp;&nbsp;PJT2AWLR Data</a></li>
+              <li class="divider hidden-xs"></li>
+              <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="login-btn"><i class="fa fa-user"></i>&nbsp;&nbsp;Login</a></li>
+            </ul>
+          </li>
+      </ul>
       <ul id="navbarMenu" class="nav navbar-nav">
         <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="about-btn"><i class="fa fa-question-circle white"></i>&nbsp;&nbsp;About</a></li>
+        <li class="hidden-xs"><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="list-btn"><i class="fa fa-list white"></i>&nbsp;&nbsp;POI List</a></li>
         <li class="dropdown">
-          <a id="toolsDrop" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe white"></i>&nbsp;&nbsp;Tools <b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="full-extent-btn"><i class="fa fa-arrows-alt"></i>&nbsp;&nbsp;Zoom To Full Extent</a></li>
-            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="legend-btn"><i class="fa fa-picture-o"></i>&nbsp;&nbsp;Show Legend</a></li>
-            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="pjt2awlr-btn"><img src="http://pjt2awlr.com/favicon.ico"></i>&nbsp;&nbsp;PJT2AWLR Data</a></li>
-            <li class="divider hidden-xs"></li>
-            <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="login-btn"><i class="fa fa-user"></i>&nbsp;&nbsp;Login</a></li>
-          </ul>
-        </li>
-        <li class="dropdown">
-            <a class="dropdown-toggle" id="downloadDrop" href="#" role="button" data-toggle="dropdown"><i class="fa fa-cloud-download white"></i>&nbsp;&nbsp;Download <b class="caret"></b></a>
+            <a class="dropdown-toggle" id="downloadDrop" href="#" role="button" data-toggle="dropdown"><i class="fa fa-cloud-download white"></i>&nbsp;&nbsp;Data <b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="{% static 'data/boroughs.geojson' %}" download="boroughs.geojson" target="_blank" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-download"></i>&nbsp;&nbsp;Boroughs</a></li>
-              <li><a href="{% static 'data/subways.geojson' %}" download="subways.geojson" target="_blank" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-download"></i>&nbsp;&nbsp;Subway Lines</a></li>
-              <li><a href="{% static 'data/DOITT_THEATER_01_13SEPT2010.geojson' %}" download="theaters.geojson" target="_blank" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-download"></i>&nbsp;&nbsp;Theaters</a></li>
-              <li><a href="{% static 'data/DOITT_MUSEUM_01_13SEPT2010.geojson' %}" download="museums.geojson" target="_blank" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-download"></i>&nbsp;&nbsp;Museums</a></li>
+              {% for odk_polyline in all_odk_polyline %}
+              <li><a href="{% static 'data/boroughs.geojson' %}" download="{{ odk_polyline.con_nama }}.zip" target="_blank" data-toggle="collapse" data-target=".navbar-collapse.in"><div style='border-bottom: 4px solid {{ odk_polyline.object_color }};margin-bottom:0.3em;width:1.5em;display:inline-block;'></div>&nbsp;&nbsp;{{ odk_polyline.con_nama }}</a></li>
+              {% endfor %}
+              {% for odk_point in all_odk_point %}
+              <li><a href="{% static 'data/boroughs.geojson' %}" download="{{ odk_point.con_nama }}.zip" target="_blank" data-toggle="collapse" data-target=".navbar-collapse.in"><img src='{{ marker_url }}+{{ odk_point.object_color|slice:"1:" }}.png'>&nbsp;&nbsp;{{ odk_point.con_nama }}</a></li>
+              {% endfor %}
+              {% for odk_polygon in all_odk_polygon %}
+              <li><a href="{% static 'data/boroughs.geojson' %}" download="{{ odk_polygon.con_nama }}.zip" target="_blank" data-toggle="collapse" data-target=".navbar-collapse.in"><div style='background-color: {{ odk_polygon.object_color }};padding:0px;width:1.4em;height:1.4em;display:inline-block;'></div>&nbsp;{{ con.con_nama }}&nbsp;&nbsp;&nbsp;&nbsp;{{ odk_point.con_nama }}</a></li>
+              {% endfor %}
+              <li class="divider hidden-xs"></li>
+              <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="service-btn"><i class="fa fa-download"></i>&nbsp;&nbsp;Services</a></li>
             </ul>
         </li>
-        <li class="hidden-xs"><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="list-btn"><i class="fa fa-list white"></i>&nbsp;&nbsp;POI List</a></li>
         <li><a href="/dashboard/disaster"><i class="fa fa-hospital-o"></i>&nbsp;&nbsp;Disaster Assessment</a></li>
         <li><a href="/dashboard/dataviz"><i class="fa fa-bar-chart"></i>&nbsp;&nbsp;Statistics & Visualization</a></li>
       </ul>

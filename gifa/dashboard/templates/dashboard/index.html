@@ -14,6 +14,8 @@
 
 {% include "dashboard/includes/block_legend_modal.html" %}
 
+{% include "dashboard/includes/block_service_modal.html" %}
+
 {% include "dashboard/includes/block_pjt2awlr_modal.html" %}
 
 {% include "dashboard/includes/block_login_modal.html" %}
@@ -72,6 +74,12 @@ $("#pjt2awlr-btn").click(function() {
 
 $("#login-btn").click(function() {
   $("#loginModal").modal("show");
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
+$("#service-btn").click(function() {
+  $("#serviceModal").modal("show");
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
@@ -779,6 +787,19 @@ if (!L.Browser.touch) {
 } else {
   L.DomEvent.disableClickPropagation(container);
 }
+
+function copyUrlFunction(inputId) {
+  if (document.selection) {
+      var range = document.body.createTextRange();
+      range.moveToElementText(document.getElementById(inputId));
+      range.select().createTextRange();
+      document.execCommand("copy");
+  } else if (window.getSelection) {
+      var range = document.createRange();
+      range.selectNode(document.getElementById(inputId));
+      window.getSelection().addRange(range);
+      document.execCommand("copy");
+}}
 
 </script>
 {% endblock %}
