@@ -80,3 +80,9 @@ def panel_humanitarian_aid(request):
 
 def panel_visualization(request):
     return render(request, 'dashboard/dataviz.html')
+
+def panel_vulnerability(request):
+    return render(request, 'dashboard/vulnerability.html')
+
+def panel_exposure(request):
+    return render(request, 'dashboard/exposure.html')

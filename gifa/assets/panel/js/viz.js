@@ -78,6 +78,8 @@ var data = [{
                             .attr('y1', tickY2 + 4)
                             .attr('y2', tickY2)
                             .attr('stroke-width', 1)
+                            .attr("width", 600)
+                            .attr("height", 400)
                     ;
             // set up the tooltip to display full dates
             var tsFormat = d3.time.format('%b %-d, %Y %I:%M%p');

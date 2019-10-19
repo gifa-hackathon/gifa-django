@@ -20,14 +20,16 @@ html, body, svg {
 }
 
 #dataviz-1 {
-    width: 100%
-    height: 420px;
-
+    width: 100%;
 }
 
-#dataviz-2 {
+#test1 {
     width: 100%
-    height: 420px;
+    height: 40%;
+}
+
+.svg.nvd3-svg {
+    height: 40% !important;
 }
 
 .nvd3 line.nv-guideline { /* Hide the guideline */
