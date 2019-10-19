@@ -15,6 +15,7 @@ print(layer.fields)
 print(layer.geom_type)
 
 mapping = {
+    'id' : 'osm_way_id',
     'nama': 'name',
     'jenis_bangunan': 'building',
     'polygon': 'Polygon'
