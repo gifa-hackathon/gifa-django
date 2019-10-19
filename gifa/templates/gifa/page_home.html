@@ -2,18 +2,42 @@
 {% load staticfiles %}
 
 <html lang="en">
-  <head>
-      <link rel="apple-touch-icon" sizes="70x70" href="{% static 'icon/favicon/ms-icon-70x70' %}">
-      <link rel="apple-touch-icon" sizes="96x96" href="{% static 'icon/favicon/favicon-96x96' %}">
-      <link rel="apple-touch-icon" sizes="150x150" href="{% static 'icon/favicon/ms-icon-150x150' %}">
-      <link rel="icon" sizes="150x150" href="{% static 'icon/favicon/ms-icon-150x150.png' %}">
-      <link rel="icon" type="image/x-icon" href="{% static 'icon/favicon/favicon.ico' %}">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#000000">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>GIFA</title>
 
-     <style>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{% static 'leaflet/1.5.1/leaflet.css' %}">
+  <link rel="stylesheet" href="{% static 'iconlayers/iconLayers.css' %}">
+  <link rel="stylesheet" href="{% static 'leaflet-measure/leaflet-measure.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-locatecontrol/0.67.0/L.Control.Locate.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
 
-     </style>
-  </head>
+  <link rel="stylesheet" href="{% static 'bootleaf/leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.css' %}">
+  <link rel="stylesheet" href="{% static 'bootleaf/css/app.css' %}">
+
+  <link rel="apple-touch-icon" sizes="70x70" href="{% static 'icon/favicon/ms-icon-70x70' %}">
+  <link rel="apple-touch-icon" sizes="96x96" href="{% static 'icon/favicon/favicon-96x96' %}">
+  <link rel="apple-touch-icon" sizes="150x150" href="{% static 'icon/favicon/ms-icon-150x150' %}">
+  <link rel="icon" sizes="150x150" href="{% static 'icon/favicon/ms-icon-150x150.png' %}">
+  <link rel="icon" type="image/x-icon" href="{% static 'icon/favicon/favicon.ico' %}">
+
+  {% block extra_css %}{% endblock extra_css %}
+</head>
   <body style="margin: 0 auto;">
+          {% block header %}
+            {% include "dashboard/includes/block_navbar.html" %}
+          {% endblock %}
         <iframe src="https://storymaps.arcgis.com/stories/2c537f404b3243e38d79a54f4b717287" frameborder="0"
          style="overflow:hidden;
          display:block; position: absolute; height: 100%; width: 100%">
