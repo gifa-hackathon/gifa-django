@@ -220,6 +220,12 @@ var googleTerrain = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={
     maxZoom: 20,
     subdomains:['mt0','mt1','mt2','mt3']
 });
+var cartoCdn = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    subdomains: 'abcd',
+    maxZoom: 19,
+    label: 'CartoDB Dark Matter'
+});
 var petaDasarBIG = L.esri.tiledMapLayer({
     url: '{{ urlPetaBIG }}',
 });
@@ -268,10 +274,15 @@ var iconLayersControl = new L.Control.IconLayers(
             layer: googleTerrain,
             icon: '{% static "icon/google_terain.png" %}'
         },
+        // {
+        //     title: 'RBI 2017',
+        //     layer: petaDasarBIG,
+        //     icon: '{% static "icon/rbi_2017.png" %}'
+        // },
         {
-            title: 'RBI 2017',
-            layer: petaDasarBIG,
-            icon: '{% static "icon/rbi_2017.png" %}'
+            title: 'Carto CDN',
+            layer: cartoCdn,
+            icon: '{% static "icon/carto_cdn.png" %}'
         },
         {
             title: 'RBI 2019',
