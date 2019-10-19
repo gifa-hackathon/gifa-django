@@ -89,12 +89,17 @@ const data =
         },
  ]
 
- // Initiate the data table
+// Jquery Listener
 $(document).ready(function () {
+	// Initiate the data table
     $('#disaster_table').DataTable({
     	responsive: true,
     	select: true,
     	data: data,
+    	dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf'
+        ],
     	/*
 	        ajax: {
 	  	      url: 'http://localhost:8000/api/entry/?format=json',
@@ -112,4 +117,6 @@ $(document).ready(function () {
     	]
     });
 });
+
+
 

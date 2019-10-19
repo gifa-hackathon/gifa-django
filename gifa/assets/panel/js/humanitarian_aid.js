@@ -3,31 +3,31 @@ const data =
 [
         {
             "householder_name": "Cecep",
-            "clothing": "082213541291",
-            "blankets": 32,
-            "sleeping_mats": "B",
-            "bathing_soap": "M",
+            "clothing": 12,
+            "blankets": 1,
+            "sleeping_mats": 1,
+            "bathing_soap": 3,
             "sanitary": "-",
-            "diapers": "farmer",
-            "cooking_pot": "farmer",
-            "plate": "farmer",
-            "spoon": "farmer",
-            "water": "farmer",
-            "food": "farmer"
+            "diapers": "-",
+            "cooking_pot": 1,
+            "plate": 1,
+            "spoon": 3,
+            "water": "10 lt",
+            "food": "rice 10 kg"
         },
         {
-            "householder_name": "Cecep",
-            "clothing": "082213541291",
-            "blankets": 32,
-            "sleeping_mats": "B",
-            "bathing_soap": "M",
+            "householder_name": "Agus",
+            "clothing": 12,
+            "blankets": 3,
+            "sleeping_mats": "-",
+            "bathing_soap": 5,
             "sanitary": "-",
-            "diapers": "farmer",
-            "cooking_pot": "farmer",
-            "plate": "farmer",
-            "spoon": "farmer",
-            "water": "farmer",
-            "food": "farmer"
+            "diapers": "-",
+            "cooking_pot": 1,
+            "plate": 2,
+            "spoon": 3,
+            "water": "20 lt",
+            "food": "rice 5 kg"
         }
  ]
 
