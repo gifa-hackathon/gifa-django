@@ -84,6 +84,12 @@ $("#service-btn").click(function() {
   return false;
 });
 
+$("#shapefile-btn").click(function() {
+  $("#shapefileModal").modal("show");
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
 $("#list-btn").click(function() {
   animateSidebar();
   return false;
