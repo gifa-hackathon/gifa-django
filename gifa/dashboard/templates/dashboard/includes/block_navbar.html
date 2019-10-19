@@ -44,6 +44,7 @@
           <img id="gifaIcon" src="{% static 'icon/gifa.png' %}">
         </a>
     </div>
+    {% if request.path != '/' %}
     <div class="navbar-collapse collapse">
       <form class="navbar-form navbar-right" role="search">
         <div class="form-group has-feedback">
@@ -53,7 +54,7 @@
       </form>
       <ul id="navbarMenu" class="nav navbar-nav navbar-right">
           <li class="dropdown">
-            <a id="toolDrop" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe" style="font-size:20px;"></i></a>
+            <a id="toolDrop" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe" style="font-size:20px;"></i>&nbsp;&nbsp;Tools<b class="caret"></b></a>
             <ul class="dropdown-menu">
               {% if request.path == '/dashboard/' %}
               <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="full-extent-btn"><i class="fa fa-arrows-alt"></i>&nbsp;&nbsp;Zoom To Full Extent</a></li>
@@ -72,7 +73,7 @@
         <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="about-btn"><i class="fa fa-question-circle white"></i>&nbsp;&nbsp;About</a></li>
         <li class="hidden-xs"><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="list-btn"><i class="fa fa-list white"></i>&nbsp;&nbsp;POI List</a></li>
         <li class="dropdown">
-            <a class="dropdown-toggle" id="downloadDrop" href="#" role="button" data-toggle="dropdown"><i class="fa fa-cloud-download white"></i>&nbsp;&nbsp;Data <b class="caret"></b></a>
+            <a class="dropdown-toggle" id="downloadDrop" href="#" role="button" data-toggle="dropdown"><i class="fa fa-database white"></i>&nbsp;&nbsp;Data <b class="caret"></b></a>
             <ul class="dropdown-menu">
               {% for odk_polyline in all_odk_polyline %}
               <li><a href="{% static 'data/boroughs.geojson' %}" download="{{ odk_polyline.con_nama }}.zip" target="_blank" data-toggle="collapse" data-target=".navbar-collapse.in"><div style='border-bottom: 4px solid {{ odk_polyline.object_color }};margin-bottom:0.3em;width:1.5em;display:inline-block;'></div>&nbsp;&nbsp;{{ odk_polyline.con_nama }}</a></li>
@@ -83,8 +84,9 @@
               {% for odk_polygon in all_odk_polygon %}
               <li><a href="{% static 'data/boroughs.geojson' %}" download="{{ odk_polygon.con_nama }}.zip" target="_blank" data-toggle="collapse" data-target=".navbar-collapse.in"><div style='background-color: {{ odk_polygon.object_color }};padding:0px;width:1.4em;height:1.4em;display:inline-block;'></div>&nbsp;{{ con.con_nama }}&nbsp;&nbsp;&nbsp;&nbsp;{{ odk_point.con_nama }}</a></li>
               {% endfor %}
+              <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="shapefile-btn"><i class="fa fa-download"></i>&nbsp;&nbsp;Shapefile</a></li>
               <li class="divider hidden-xs"></li>
-              <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="service-btn"><i class="fa fa-download"></i>&nbsp;&nbsp;Services</a></li>
+              <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="service-btn"><i class="fa fa-cloud-download"></i>&nbsp;&nbsp;Services</a></li>
             </ul>
         </li>
         {% endif %}
@@ -121,6 +123,11 @@
             </ul>
         </li>
       </ul>
+      {% else %}
+        <ul id="navbarMenu" class="nav navbar-nav">
+          <li><a href="{% url 'dashboard:gifa_dashboard' %}">Dashboard</a></li>
+        </ul>
+      {% endif %}
     </div><!--/.navbar-collapse -->
   </div>
 </div>

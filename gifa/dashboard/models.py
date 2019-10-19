@@ -5,6 +5,50 @@ from odkcollect.models import ODKConnector
 import django_tables2 as tables
 
 
+class BangunanOSM(models.Model):
+    id = models.BigIntegerField(
+        primary_key=True,
+        verbose_name=_('ID')
+    )
+    nama = models.CharField(
+        max_length=255,
+        verbose_name=_('Nama')
+    )
+    jenis_bangunan = models.CharField(
+        max_length=255,
+        verbose_name=_('Connection Name')
+    )
+    polygon = models.MultiPolygonField(
+        null=True,
+        blank=True,
+        verbose_name=_('Polygon')
+    )
+
+
+class InfrastrukturJalanOSM(models.Model):
+    id = models.BigIntegerField(
+        primary_key=True,
+        verbose_name=_('ID')
+    )
+    nama = models.CharField(
+        max_length=255,
+        verbose_name=_('Nama')
+    )
+    jenis_jalan = models.CharField(
+        max_length=255,
+        verbose_name=_('Jenis Jalan')
+    )
+    keterangan = models.CharField(
+        max_length=255,
+        verbose_name=_('Keterangan')
+    )
+    polyline = models.MultiLineStringField(
+        null=True,
+        blank=True,
+        verbose_name=_('Polyline')
+    )
+
+
 class SesarLembang(models.Model):
     id = models.BigIntegerField(
         primary_key=True,
