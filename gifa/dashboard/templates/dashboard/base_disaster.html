@@ -23,6 +23,10 @@
     <link rel="apple-touch-icon" sizes="150x150" href="{% static 'icon/favicon/ms-icon-150x150' %}">
     <link rel="icon" sizes="150x150" href="{% static 'icon/favicon/ms-icon-150x150.png' %}">
     <link rel="icon" type="image/x-icon" href="{% static 'icon/favicon/favicon.ico' %}">
+    <script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+
 
     {% block extra_css %}{% endblock extra_css %}
   </head>
@@ -34,7 +38,6 @@
 
       {% block content %}{% endblock %}
 
-      <script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.5/typeahead.bundle.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.min.js"></script>

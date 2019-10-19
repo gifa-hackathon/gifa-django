@@ -9,7 +9,7 @@ from django.core.serializers import serialize
 from django.http import JsonResponse
 from django.db.models import Q
 
-from dashboard.models import Desa, Category, Refugee, Person
+from dashboard.models import Desa, Category
 from odkcollect.models import ODKConnector
 from mapservice.models import MapServices, LayerServices
 
@@ -72,42 +72,11 @@ def gifa_dashboard(request):
     }
     return render(request, 'dashboard/index.html', context)
 
-def panel_disaster(request):
+def panel_affected_family(request):
+    return render(request, 'dashboard/affected_family.html')
 
-    # static dataset
-    data = [
-        {
-            "first_name": "Cecep",
-            "last_name": "Adi",
-            "birth_date": "1970-04-03",
-            "phone": "082213541291"
-        },
-        {
-            "first_name": "Roby",
-            "last_name": "Fauzi",
-            "birth_date": "1986-06-23",
-            "phone": "082213541291"
-        },
-        {
-            "first_name": "Irsyad",
-            "last_name": "Kharisma",
-            "birth_date": "1987-01-01",
-            "phone": "082213541331"
-        },
-        {
-
-            "first_name": "Agung",
-            "last_name": "Pratikno",
-            "birth_date": "1966-04-03",
-            "phone": "082213541291"
-        },
-    ]
-
-    table = Refugee(data)
-    # table = Refugee(Person.objects.all())
-    return render(request, 'dashboard/disaster.html', {
-        "table": table
-        })
+def panel_shelter(request):
+    return render(request, 'dashboard/shelter.html')
 
 def panel_visualization(request):
     return render(request, 'dashboard/dataviz.html')

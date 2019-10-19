@@ -82,8 +82,27 @@
               <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="service-btn"><i class="fa fa-download"></i>&nbsp;&nbsp;Services</a></li>
             </ul>
         </li>
-        <li><a href="/dashboard/disaster"><i class="fa fa-hospital-o"></i>&nbsp;&nbsp;Disaster Assessment</a></li>
-        <li><a href="/dashboard/dataviz"><i class="fa fa-bar-chart"></i>&nbsp;&nbsp;Statistics & Visualization</a></li>
+        <li class="dropdown">
+            <a class="dropdown-toggle" id="disasterDrop" href="#" role="button" data-toggle="dropdown"><i class="fa fa-hospital-o"></i>&nbsp;&nbsp;Disaster Assessment <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="/dashboard/affected_family"><i class="fa fa-hospital-o"></i>&nbsp;&nbsp;Affected Family</a></li>
+              <li><a href="/dashboard/shelter"><i class="fa fa-hospital-o"></i>&nbsp;&nbsp;Humanitarian Needs Assessment</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a class="dropdown-toggle" id="statisticDrop" href="#" role="button" data-toggle="dropdown"><i class="fa fa-bar-chart"></i>&nbsp;&nbsp;Statistics & Visualization <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">History Data</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Flood</a></li>
+                        <li><a href="#">Earthquake</a></li>
+                    </ul>
+                </li>
+                <li><a href="#"><i class="fa fa-hospital-o"></i>&nbsp;&nbsp;BPS</a></li>
+                <li><a href="/dashboard/dataviz"><i class="fa fa-bar-chart"></i>&nbsp;&nbsp;Humanitarian Needs Assessment</a></li>
+            </ul>
+        </li>
       </ul>
     </div><!--/.navbar-collapse -->
   </div>

@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.gis',
     'django.contrib.sites',
-    'django_tables2',
 ]
 
 MIDDLEWARE = [
@@ -223,7 +222,8 @@ BOWER_INSTALLED_APPS = (
     'bootstrap-show-password#1.2.1',
     'eonasdan-bootstrap-datetimepicker#4.17.47',
     'leaflet-routing-machine#3.2.12',
-    'leaflet.wms#0.2.0'
+    'leaflet.wms#0.2.0',
+    'datatables#*',
 )
 
 ODK_AGGREGATE_HOST = LOCAL_ODK_AGGREGATE_HOST

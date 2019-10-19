@@ -1,0 +1,30 @@
+{% extends "dashboard/base_disaster.html" %}
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'panel/css/disaster.css' %}">
+
+{% block content %}
+
+<div id="container-datatable" style="margin-top: 25px;">
+	<div class="col-md-12">
+		{% block scripts %}
+		<script src="{% static 'panel/js/disaster.js' %}"></script>
+		{% endblock %}
+		<table id="disaster_table" class="table">
+		    <thead>
+		        <tr>
+		            <th>First Name</th>
+		            <th>Last Name</th>
+		            <th>Phone</th>
+		            <th>Age</th>
+		            <th>Blood Type</th>
+		            <th>Gender</th>
+		            <th>Disability Status</th>
+		            <th>Occupation</th>
+		        </tr>
+		    </thead>
+		</table>
+	</div>
+</div>
+
+{% endblock %}
