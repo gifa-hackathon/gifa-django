@@ -6,6 +6,7 @@
 <div id="container">
     {% include "dashboard/includes/block_sidebar.html" %}
     {% include "dashboard/includes/block_map.html" %}
+    {% include "dashboard/includes/block_map_modal.html" %}
 </div>
 
 {% include "dashboard/includes/block_loadbar.html" %}
@@ -355,7 +356,7 @@ var desaBndy = L.geoJson({{ desa_bndy_json|safe }}, {
       console.log(this.feature.properties.nama);
     });
     layer.on('mouseout', function () {
-      console.log(null);
+
     });
   }
 });
@@ -410,11 +411,11 @@ var odkLines_{{ odk_polyline.con_id }} = L.geoJson(null, {
     });
   }
 });
-$.getJSON("{% url 'odkcollect:get_odk_geojson' odk_polyline.con_id %}", function (data) {
-  odkLines_{{ odk_polyline.con_id }}.addData(data);
-  {% if forloop.counter == 1 %}map.addLayer(odkLines_{{ odk_polyline.con_id }}){% endif %};
-});
-{% endfor %}
+// $.getJSON("{% url 'odkcollect:get_odk_geojson' odk_polyline.con_id %}", function (data) {
+//   odkLines_{{ odk_polyline.con_id }}.addData(data);
+//   {% if forloop.counter == 1 %}map.addLayer(odkLines_{{ odk_polyline.con_id }}){% endif %};
+// });
+// {% endfor %}
 
 {% for odk_polygon in all_odk_polygon %}
 var odkPolygon_{{ odk_polygon.con_id }} = L.geoJson(null, {
@@ -470,11 +471,11 @@ var odkPolygon_{{ odk_polygon.con_id }} = L.geoJson(null, {
     });
   }
 });
-$.getJSON("{% url 'odkcollect:get_odk_geojson' odk_polygon.con_id %}", function (data) {
-  odkPolygon_{{ odk_polygon.con_id }}.addData(data);
-  {% if forloop.counter == 1 %}map.addLayer(odkPolygon_{{ odk_polygon.con_id }}){% endif %};
-});
-{% endfor %}
+// $.getJSON("{% url 'odkcollect:get_odk_geojson' odk_polygon.con_id %}", function (data) {
+//   odkPolygon_{{ odk_polygon.con_id }}.addData(data);
+//   {% if forloop.counter == 1 %}map.addLayer(odkPolygon_{{ odk_polygon.con_id }}){% endif %};
+// });
+// {% endfor %}
 
 /* Single marker cluster layer to hold all clusters */
 var markerClusters = new L.MarkerClusterGroup({
@@ -525,11 +526,11 @@ var odkPoint_{{ odk_point.con_id }} = L.geoJson(null, {
     }
   }
 });
-$.getJSON("{% url 'odkcollect:get_odk_geojson' odk_point.con_id %}", function (data) {
-  odkPoint_{{ odk_point.con_id }}.addData(data);
-  {% if forloop.counter == 1 %}map.addLayer(odkPointLayer_{{ odk_point.con_id }}){% endif %};
-});
-{% endfor %}
+// $.getJSON("{% url 'odkcollect:get_odk_geojson' odk_point.con_id %}", function (data) {
+//   odkPoint_{{ odk_point.con_id }}.addData(data);
+//   {% if forloop.counter == 1 %}map.addLayer(odkPointLayer_{{ odk_point.con_id }}){% endif %};
+// });
+// {% endfor %}
 
 map = L.map("map", {
   minZoom: 9,
@@ -599,6 +600,8 @@ map.on("moveend", function (e) {
 /* Clear feature highlight when map is clicked */
 map.on("click", function(e) {
   highlight.clearLayers();
+  // $('#modalMap').modal('toggle');
+  console.log(e);
 });
 
 /* Attribution control */
