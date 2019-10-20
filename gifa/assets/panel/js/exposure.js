@@ -21,10 +21,14 @@ $(document).ready(function () {
         order: [[0, "desc"]],
         // function to change background cell color based on specific value
         createdRow: function(row, data, index) {
-            if(data["exposure_index"] <= 5) {
+            if(data["exposure_index"] <= 30) {
                 $('td', row).eq(2).css('background-color', '#fafa46');
                 $('td', row).eq(2).addClass('exposure');
-            } else {
+            } else if(data["exposure_index"] > 30 || data["exposure_index"] <= 60)  {
+                $('td', row).eq(2).css('background-color', '#eb9234');
+                $('td', row).eq(2).addClass('exposure');
+            } else if (data["exposure_index"] >= 60)  {
+                $('td', row).eq(2).css('background-color', '#ff1212');
                 $('td', row).eq(2).addClass('exposure');
             }
         }
