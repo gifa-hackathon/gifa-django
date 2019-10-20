@@ -27,7 +27,7 @@ $(document).ready(function () {
             } else if(data["exposure_index"] > 30 || data["exposure_index"] <= 60)  {
                 $('td', row).eq(2).css('background-color', '#eb9234');
                 $('td', row).eq(2).addClass('exposure');
-            } else if (data["exposure_index"] >= 60)  {
+            } else {
                 $('td', row).eq(2).css('background-color', '#ff1212');
                 $('td', row).eq(2).addClass('exposure');
             }
