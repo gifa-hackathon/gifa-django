@@ -1,4 +1,17 @@
-gifaBranch develop
+gifa Branch develop
+
+\ All we need to get GIFA installed using this repository and running well, we need to have :
+1. Linux OS
+2. VirtualBox
+3. Vagrant
+
+And we also require to install :
+1. Python Anaconda installed inside vagrant image
+2. Apache Tomcat
+3. ODK Aggregate Container
+
+--------------------------
+
 
 \# Install VirtualBox 5.x / 6.x
 
