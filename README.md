@@ -1,6 +1,6 @@
 gifa Branch develop
 
-\ All we need to get GIFA installed using this repository and running well, we need to have :
+All we need to get GIFA installed using this repository and running well, we need to have :
 1. Linux OS
 2. VirtualBox
 3. Vagrant
