@@ -12,7 +12,7 @@ rq-scheduler==0.9
 supervisor==4.0.3
 pyvirtualdisplay==0.2.1
 dbfpy==2.3.1
-gsconfig==1.0.10
+##gsconfig==1.0.10
 django-user-accounts==2.1.0
 django-simple-captcha==0.5.11
 django-bootstrap-form==3.4
@@ -22,4 +22,5 @@ geopandas==0.4.1
 django-leaflet==0.24.0
 geojson==2.5.0
 django-colorfield==0.1.15
-uwsgi==2.0.18
+##uwsgi==2.0.18
+django-tables2
