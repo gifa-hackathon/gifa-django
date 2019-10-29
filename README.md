@@ -46,6 +46,11 @@ gifaBranch develop
     nodeenv -p --prebuilt
     npm install -g bower
 
+\# This application requires Apache Tomcat to run ODK-Aggregate Server (29 October 2019)
+
+	for now visit https://linuxize.com/post/how-to-install-tomcat-8-5-on-ubuntu-18.04/
+	we will update the steps or image on vagrantcloud
+
 \# Create a new Django project (SKIP THIS STEP, FIRST COMMIT ONLY!!)
 
     django-admin startproject gifa
