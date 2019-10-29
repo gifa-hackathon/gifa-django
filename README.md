@@ -20,7 +20,8 @@ gifaBranch develop
     cp Vagrantfile.example Vagrantfile
 
 \# Rename db_settings.py.example to db_settings.py
-\ Go to gifa/gifa/ 
+
+ Go to gifa/gifa/ 
 
     cp db_settings.py.example db_settings.py
 
