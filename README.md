@@ -21,10 +21,7 @@ gifaBranch develop
 
 \# Rename db_settings.py.example to db_settings.py
 
- Go to gifa/gifa/ 
-    
-    cd gifa/gifa
-    cp db_settings.py.example db_settings.py
+    cp gifa/gifa/db_settings.py.example gifa/gifa/db_settings.py
 
 \# Start the Vagrant VM
 
