@@ -1,6 +1,10 @@
+GIFA stands for Geo Intelligence System for Flood Prone Area. An application built with Django webserver, PostgreSQL+PostGIS, and OpenDataKit (ODK) Collect to support flood prone area to prepare flood and calculate evacuation route before disaster and during disaster.
+
+This app was built by my team (Cisitu team) during hackathon event held by https://uinspire.id/ (2019) in collaboration with West Java BPBD, BNPB, UNITAR, UNESCO. We were the 1st winner (https://uinspire.id/better_community_fix_final8-shp/) 
+
 gifa Branch develop
 
-\ All we need to get GIFA installed using this repository and running well, we need to have :
+All we need to get GIFA installed using this repository and running well, we need to have :
 1. Linux OS
 2. VirtualBox
 3. Vagrant
